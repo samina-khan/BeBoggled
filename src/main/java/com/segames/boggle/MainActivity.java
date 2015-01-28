@@ -33,14 +33,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
         Button current_button= (Button) v;
         //current_button.setText("Pressed!");
-
+        int NumPlayers = 1;
         switch(v.getId()){
+
             case R.id.button_single:
-                Intent singleIntent = new Intent(v.getContext(), SinglePlayer.class);
+                NumPlayers = 1;
+                Intent singleIntent = new Intent(v.getContext(), SinglePlayerAlt.class);
+                singleIntent.putExtra("NumPlayers",NumPlayers);
                 startActivity(singleIntent);
                 break;
             case R.id.button_double:
+                NumPlayers = 2;
                 Intent doubleIntent = new Intent(v.getContext(), DoublePlayer.class);
+                doubleIntent.putExtra("NumPlayers",NumPlayers);
                 startActivity(doubleIntent);
             default:
 

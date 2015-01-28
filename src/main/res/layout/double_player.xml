@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:text="@string/scorestringtxt" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scorelbl"
         android:textColor="@android:color/darker_gray"
@@ -52,9 +52,10 @@
         <TableLayout
             android:id="@+id/table1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal">
             <TableRow
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal">
 
@@ -81,7 +82,7 @@
 
             </TableRow>
             <TableRow
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal">
 
@@ -100,7 +101,7 @@
                     android:id="@+id/button_6"
                     android:layout_span="1"
                     android:layout_height="75dp"
-                    android:layout_width="wrap_content"/>
+                    android:layout_width="75dp"/>
                 <Button
                     android:id="@+id/button_7"
                     android:layout_span="1"
@@ -108,7 +109,7 @@
                     android:layout_width="75dp"/>
             </TableRow>
             <TableRow
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal">
 
@@ -134,7 +135,7 @@
                     android:layout_width="75dp"/>
             </TableRow>
             <TableRow
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal">
 
@@ -173,6 +174,20 @@
         android:background="@android:color/darker_gray">
     </GridView>-->
     </LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="325dp">
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shake"
+        android:visibility="visible"
+        />
+</LinearLayout>
+
     <LinearLayout
         android:id="@+id/page_buttons"
         android:orientation="horizontal"
@@ -180,29 +195,55 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-
         >
-        <TextView
+        <TableLayout
+            android:id="@+id/table2"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <TableRow>
+                <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="@string/yourwords"
+                android:textAlignment="center"/>
+
+                <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="@string/oppwords"
+                android:textAlignment="center"/>
+            </TableRow>
+
+            <TableRow>
+            <!--<TextView
             android:id="@+id/my_wordlist"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:textColor="@android:color/white"
-            android:text="@string/my_wordlist"/>
+            android:maxLines="10"
+            android:scrollbars="vertical"/> -->
+                <TextView
+                    android:id="@+id/my_wordlist"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:textColor="@android:color/white"
+                    android:maxLines="7"
+                    android:scrollbars="vertical"
+                    />
 
         <TextView
             android:id="@+id/opp_wordlist"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:textColor="@android:color/white"
-            android:text="@string/opp_wordlist"/>
-    <Button
-        android:id="@+id/button_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/submit"
-        android:visibility="gone"
-        />
+            android:maxLines="10"
+            android:scrollbars="vertical"/>
+            </TableRow>
+        </TableLayout>
+
 
     <Button
         android:id="@+id/button_exit"

@@ -8,10 +8,10 @@
     <string name="countdown">Countdown </string>
     <string name="exit">Exit</string>
     <string name="submit">Submit</string>
-    <string name="shake">Shake</string>
+    <string name="shake">Shake To Begin</string>
     <string name="single_mode">Single Player Mode</string>
     <string name="double_mode">Double Player Mode</string>
-    <string name="my_wordlist">Your words: </string>
-    <string name="opp_wordlist">Opponent\'s words: </string>
+    <string name="yourwords">Your words: </string>
+    <string name="oppwords">Opponent\'s words: </string>
 
 </resources>

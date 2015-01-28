@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 
@@ -26,7 +28,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     String my_list = "";
     TextView opp_wordlist;
     String opp_list = "";
-    Coordinates previous_ij = new Coordinates(-1,-1);
+    //Coordinates previous_ij = new Coordinates(-1,-1);
 
 
     //Game set-up utility variables
@@ -35,8 +37,10 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     static final int basic = 0;
     static final int cutthroat = 1;
     static final int normal_size = 4;
-    static Button[][] game_buttons = new Button[normal_size][normal_size];
-
+    //static Button[][] game_buttons = new Button[normal_size][normal_size];
+    Gameboard gameboard;
+    CommManager mgr;
+    int numPlayers;
 
     //Game state variables
     static boolean gameInProgress = false;
@@ -56,18 +60,18 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.double_player);
-        my_wordlist = (TextView)findViewById(R.id.my_wordlist);
-        if(my_wordlist != null)my_list = my_wordlist.getText().toString();
-        opp_wordlist = (TextView)findViewById(R.id.opp_wordlist);
-        if(opp_wordlist != null)opp_list = opp_wordlist.getText().toString();
+        numPlayers = getIntent().getExtras().getInt("NumPlayers");
+        gameboard = new Gameboard(normal_size);
+
+        button_submit = (Button) findViewById(R.id.button_submit);
+        button_submit.setOnClickListener(this);
 
         initializeBoardButtons();
-        setAuxiliaryButtons();
 
         setShakeDetection();
         setDoubleTap();
 
-        startNewGame();
+        //startNewGame();
 
 
     }
@@ -77,24 +81,46 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
             public boolean onDoubleTap(MotionEvent e) {
                 //button_submit = (Button) findViewById(R.id.button_submit);
-                opaqueButtons();
-                if(wordOK(selection)){
-                my_list = my_list.concat("\n"+selection);
-                my_wordlist.setText(my_list);}
+                gameboard.opaqueButtons();
+                int tempscore = wordscore(selection);
+                if( tempscore > -1){
+                    my_list = my_list.concat("\n"+selection);
+                    Log.v("Tag",selection);
+                    my_wordlist.setText(my_list);
+                    score+=tempscore;
+                    setScore(score);
+                }
+                gameboard.clearpreviousclick();
                 selection="";
                 return true;
             }
         });
     }
 
-    boolean wordOK(String word)
+    void setScore(int score)
     {
-        //Pass to server
-        return true;
+        TextView scoretxt = (TextView) findViewById(R.id.score);
+        scoretxt.setText(Integer.toString(score));
+
+    }
+
+    int wordscore(String word)
+    {
+        int score = -1;
+
+        if(selection.length()>=3)
+        {
+            String serverreply = CommManager.SendServer("word",selection);
+            score = Integer.parseInt(serverreply);
+        }
+
+        return score;
+
     }
     void shakeGrid(int length){
 
         if(!gameInProgress){
+            setAuxiliary();
             setGameBoard();
             startNewGame();
         }
@@ -104,14 +130,6 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void startNewGame()
     {
         score = 0;
-
-        /*
-        if(numRounds <= maxEasyRounds) level = easy;
-        else level = normal;
-
-        if(level == easy){ game_boardSize = easy_size; hideButtons();}
-        else { game_boardSize = normal_size; showButtons();}*/
-
         gameInProgress=true;
 
     }
@@ -120,29 +138,29 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void initializeBoardButtons()
     {
         //find buttons
-        game_buttons[0][0]= (Button) findViewById(R.id.button_0);
-        game_buttons[0][1]= (Button) findViewById(R.id.button_1);
-        game_buttons[0][2]= (Button) findViewById(R.id.button_2);
-        game_buttons[0][3]= (Button) findViewById(R.id.button_3);
-        game_buttons[1][0]= (Button) findViewById(R.id.button_4);
-        game_buttons[1][1]= (Button) findViewById(R.id.button_5);
-        game_buttons[1][2]= (Button) findViewById(R.id.button_6);
-        game_buttons[1][3]= (Button) findViewById(R.id.button_7);
-        game_buttons[2][0]= (Button) findViewById(R.id.button_8);
-        game_buttons[2][1]= (Button) findViewById(R.id.button_9);
-        game_buttons[2][2]= (Button) findViewById(R.id.button_10);
-        game_buttons[2][3]= (Button) findViewById(R.id.button_11);
-        game_buttons[3][0]= (Button) findViewById(R.id.button_12);
-        game_buttons[3][1]= (Button) findViewById(R.id.button_13);
-        game_buttons[3][2]= (Button) findViewById(R.id.button_14);
-        game_buttons[3][3]= (Button) findViewById(R.id.button_15);
+        gameboard.buttons[0][0]= (Button) findViewById(R.id.button_0);
+        gameboard.buttons[0][1]= (Button) findViewById(R.id.button_1);
+        gameboard.buttons[0][2]= (Button) findViewById(R.id.button_2);
+        gameboard.buttons[0][3]= (Button) findViewById(R.id.button_3);
+        gameboard.buttons[1][0]= (Button) findViewById(R.id.button_4);
+        gameboard.buttons[1][1]= (Button) findViewById(R.id.button_5);
+        gameboard.buttons[1][2]= (Button) findViewById(R.id.button_6);
+        gameboard.buttons[1][3]= (Button) findViewById(R.id.button_7);
+        gameboard.buttons[2][0]= (Button) findViewById(R.id.button_8);
+        gameboard.buttons[2][1]= (Button) findViewById(R.id.button_9);
+        gameboard.buttons[2][2]= (Button) findViewById(R.id.button_10);
+        gameboard.buttons[2][3]= (Button) findViewById(R.id.button_11);
+        gameboard.buttons[3][0]= (Button) findViewById(R.id.button_12);
+        gameboard.buttons[3][1]= (Button) findViewById(R.id.button_13);
+        gameboard.buttons[3][2]= (Button) findViewById(R.id.button_14);
+        gameboard.buttons[3][3]= (Button) findViewById(R.id.button_15);
 
         //set onClick Listener
         for(int i=0; i< 4; i++)
         {
             for(int j=0; j< 4;j++){
-            game_buttons[i][j].setOnClickListener(this);
-            game_buttons[i][j].setOnTouchListener(new View.OnTouchListener() {
+                gameboard.buttons[i][j].setOnClickListener(this);
+                gameboard.buttons[i][j].setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
                     return gestureDetector.onTouchEvent(event);
                 }
@@ -152,22 +170,14 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             to go with all screen sizes */
         }
 
-        setGameBoard();
+        //setGameBoard();
 
     }
 
     void setGameBoard()
     {
-
-        RandomString generator = new RandomString(game_boardSize*game_boardSize);
-        String[] letters1 = generator.nextString(); //assuming correct string comes in
-        for(int i = 0, k = 0; i < game_boardSize; i++){
-            for(int j = 0; j < game_boardSize; j++){
-                game_buttons[i][j].setText(letters1[k++]);
-            }
-        }
-
-
+        String str = CommManager.RequestNewGrid(game_boardSize*game_boardSize);
+        gameboard.setGameboard(str);
     }
 
     void setShakeDetection()
@@ -186,19 +196,27 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         });
     }
 
-    void setAuxiliaryButtons()
+    void setAuxiliary()
     {
-        button_submit = (Button) findViewById(R.id.button_submit);
-        button_submit.setOnClickListener(this);
 
+        my_wordlist = (TextView)findViewById(R.id.my_wordlist);
+        if(my_wordlist != null)my_list = my_wordlist.getText().toString();
+        opp_wordlist = (TextView)findViewById(R.id.opp_wordlist);
+        if(opp_wordlist != null)opp_list = opp_wordlist.getText().toString();
+
+        my_wordlist.setMovementMethod(new ScrollingMovementMethod());
+        opp_wordlist.setMovementMethod(new ScrollingMovementMethod());
+        TableLayout listtable = (TableLayout)findViewById(R.id.table2);
+        listtable.setVisibility(View.VISIBLE);
+
+
+
+
+        /*
         button_exit = (Button) findViewById(R.id.button_exit);
-        button_exit.setOnClickListener(this);
+        button_exit.setOnClickListener(this);*/
     }
 
-    void sendToServer(String s)
-    {
-        Log.println(1,"sendToServer:","Selection is: " + s);
-    }
     @Override
     public void onResume() {
         super.onResume();
@@ -218,10 +236,20 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
         Button current_button= (Button) v;
         switch(v.getId()){
-
+            case R.id.button_submit:
+                shakeGrid(gameboard.size*gameboard.size);
+                startNewGame();
+                current_button.setVisibility(View.GONE);
+                break;
             default:
-                current_button.getBackground().setAlpha(100);
-                selection = selection + current_button.getText();
+                if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
+                    current_button.getBackground().setAlpha(100);
+                    selection = selection + current_button.getText();
+                    gameboard.previousclick(current_button.getId());
+                }
+                else{
+                   //do nothing? display message?
+                }
         }
         /*
         if(current_button.getText().equals(getString(R.string.shake))) {
@@ -239,7 +267,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     }
     void opaqueButtons()
     {
-        for(Button[] g: game_buttons)
+        for(Button[] g: gameboard.buttons)
             for(Button b:g)
                 b.getBackground().setAlpha(255);
     }
