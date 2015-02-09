@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../wi2015cs454-group3" vcs="Git" />
+    <mapping directory="$USER_HOME$/Desktop/PL/Homeworks/HW3/wi2015cs454-group3" vcs="Git" />
   </component>
 </project>
 

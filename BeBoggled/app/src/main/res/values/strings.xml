@@ -2,14 +2,16 @@
 <resources>
 
     <string name="app_name">BeBoggled</string>
-    <string name="hello_world">Have fun with BeBoggled!</string>
+    <string name="hello_world">Have fun with Boggle!</string>
     <string name="action_settings">Settings</string>
-    <string name="score">Score</string>
-    <string name="timer">Timer</string>
+    <string name="scorestringtxt">Score </string>
+    <string name="countdown">Countdown </string>
     <string name="exit">Exit</string>
     <string name="submit">Submit</string>
-    <string name="shake">Shake</string>
-    <string name="single_mode">Single Player Mode</string>
-    <string name="double_mode">Double Player Mode</string>
+    <string name="shake">Shake To Begin</string>
+    <string name="single_mode">Play Single</string>
+    <string name="double_mode">Play Opponent</string>
+    <string name="yourwords">Your words: </string>
+    <string name="oppwords">Opponent\'s words: </string>
 
 </resources>

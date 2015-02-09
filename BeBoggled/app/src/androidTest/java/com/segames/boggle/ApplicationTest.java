@@ -1,4 +1,4 @@
-package com.segames.beboggled;
+package com.segames.boggle;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

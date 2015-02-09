@@ -1,4 +1,4 @@
-package com.segames.beboggled;
+package com.segames.boggle;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -9,15 +9,16 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class LaunchPage extends ActionBarActivity  implements View.OnClickListener{
+public class MainActivity extends ActionBarActivity implements View.OnClickListener{
 
+    //All variables
     Button button_single;
     Button button_double;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch_page);
+        setContentView(R.layout.activity_main);
 
         // 2. Access the Buttons defined in layout XML
         // and listen for it here
@@ -32,17 +33,35 @@ public class LaunchPage extends ActionBarActivity  implements View.OnClickListen
     public void onClick(View v) {
         Button current_button= (Button) v;
         //current_button.setText("Pressed!");
+        int NumPlayers = 1;
+        switch(v.getId()){
+
+            case R.id.button_single:
+                NumPlayers = 1;
+                Intent singleIntent = new Intent(v.getContext(), SinglePlayer.class);
+                singleIntent.putExtra("NumPlayers",NumPlayers);
+                startActivity(singleIntent);
+                break;
+            case R.id.button_double:
+                NumPlayers = 2;
+                Intent doubleIntent = new Intent(v.getContext(), DoublePlayer.class);
+                doubleIntent.putExtra("NumPlayers",NumPlayers);
+                startActivity(doubleIntent);
+            default:
+
+        }
+        /*
         if(current_button.getText().equals(getString(R.string.single_mode))) {
             Intent myIntent = new Intent(v.getContext(), SinglePlayer.class);
             startActivity(myIntent);
-        }
+        }*/
+
+
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_launch_page, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -60,6 +79,4 @@ public class LaunchPage extends ActionBarActivity  implements View.OnClickListen
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }
