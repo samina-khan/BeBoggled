@@ -12,27 +12,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView android:id="@+id/scorelbl" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="@string/scorestringtxt"
-        android:textSize="15dp"
-        android:textColor="@android:color/white"/>
+        <TextView android:id="@+id/roundlbl" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/roundtxt"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"/>
 
-    <TextView android:id="@+id/score" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:textSize="15dp"
-        android:layout_toRightOf="@+id/scorelbl"
-        android:text="0"
-        android:textColor="@android:color/white"/>
+        <TextView android:id="@+id/round" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:textSize="18dp"
+            android:layout_toRightOf="@+id/roundlbl"
+            android:text="0"
+            android:textColor="@android:color/white"/>
 
-    <TextView android:id="@+id/timer" android:layout_width="wrap_content"
+        <TextView android:id="@+id/scorelbl" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/round"
+            android:paddingLeft="20dp"
+            android:text="@string/scorestringtxt"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView android:id="@+id/score" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:textSize="18dp"
+            android:layout_toRightOf="@+id/scorelbl"
+            android:text="0"
+            android:textColor="@android:color/white"/>
+
+
+        <TextView android:id="@+id/timer" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_gravity=""
         android:text="3:00"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textColor="@android:color/white"/>
 </RelativeLayout>
     </LinearLayout>
@@ -41,7 +58,7 @@
         android:id="@+id/layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 

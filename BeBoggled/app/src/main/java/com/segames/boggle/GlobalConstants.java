@@ -18,8 +18,8 @@ public interface GlobalConstants {
     public static final int BBEasyLevelSize = 3;    // i.e. 3 by 3
     public static final int BBNormalLevelSize = 4;  // i.e. 4 by 4
 
-    public static final int BBEasyLevelNoWords = 5;
-    public static final int BBNormalLevelNoWords = 8;
+    public static final int BBEasyLevelNoWords = 15;
+    public static final int BBNormalLevelNoWords = 20;
 
     public static final int BBWordsSuccess = 0;
     public static final int BBWordsFailure = -1;

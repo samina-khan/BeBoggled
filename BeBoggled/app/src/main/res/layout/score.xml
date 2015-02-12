@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="@drawable/score"
+    android:layout_height="match_parent" android:background="@drawable/score1"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin"
@@ -11,11 +11,18 @@
     android:orientation="vertical"
 >
     <TextView
-        android:id = "@+id/ScoreText"
+        android:id = "@+id/CongoText"
         style = "@style/ScoreText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Good job!"/>
+        android:text="Great!"/>
+    <TextView
+        android:id = "@+id/RoundVal"
+        style = "@style/ScoreValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Round: 10"
+        android:visibility="gone"/>
     <TextView
         android:id = "@+id/ScoreVal"
         style = "@style/ScoreValueText"
@@ -66,19 +73,45 @@
 
 
 </LinearLayout>
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+        android:weightSum="1">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_weight="0.9"
+        android:layout_height="wrap_content"
         android:id="@+id/allwords"
-
-
+        android:scrollbars="vertical"
         android:paddingTop="20dp"
         android:text="Hi"
         android:textColor="@android:color/white"
         android:textSize="20dp"/>
+        <LinearLayout
+            android:layout_marginLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_single"
+                android:layout_gravity="bottom"
+                android:text="Next Round"
+                style="@style/BtnTheme2"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="15dp"
+                android:id="@+id/button_main"
+                android:text="End Game"
+                style="@style/BtnTheme2"/>
+        </LinearLayout>
+
     </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

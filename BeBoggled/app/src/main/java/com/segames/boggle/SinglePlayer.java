@@ -33,7 +33,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     static final int easy_size = 3;
     static final int normal_size = 4;
 
-    private final long startTime = 180 * 1000;
+    private final long startTime = 60 * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
 
@@ -57,7 +57,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     //static Button[][] game_buttons = new Button[normal_size][normal_size];
     Gameboard gameboard;
     CommManager mgr;
-    int numPlayers;
+    //int numPlayers;
     GestureDetector gestureDetector;
     //Shake-detection variables
     private SensorManager mSensorManager;
@@ -71,17 +71,28 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_player);
 
-        numPlayers = getIntent().getExtras().getInt("NumPlayers");
-        gameboard = new Gameboard(BBEasyLevelSize);
+        numRounds = getIntent().getExtras().getInt("Round");
+        score = getIntent().getExtras().getInt("Score");
+        Log.v("Round",Integer.toString(numRounds));
+        int blevelsize = (numRounds>maxEasyRounds)?BBNormalLevelSize:BBEasyLevelSize;
+        gameboard = new Gameboard(blevelsize);
+
 
         button_submit = (Button) findViewById(R.id.button_submit);
         button_submit.setOnClickListener(this);
 
+
         initializeBoardButtons();
+
         setTimer(this);
         setShakeDetection();
         setDoubleTap();
 
+        TextView roundtext = (TextView) findViewById(R.id.round);
+        roundtext.setText(Integer.toString(numRounds));
+
+        TextView scoretext = (TextView) findViewById(R.id.score);
+        scoretext.setText(Integer.toString(score));
         //startNewGame();
 
 
@@ -92,6 +103,10 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         timer = (TextView) findViewById(R.id.timer);
         timer.setText("" + String.format("%02d",((startTime/1000)/60))+":"+String.format("%02d",((startTime/1000)%60)));
         //timer.setText(String.valueOf((startTime/1000)/60)+":"+String.valueOf((startTime/1000)%60));
+    }
+    @Override
+    public void onBackPressed() {
+        //gameInProgress=false;
     }
     void setDoubleTap()
     {
@@ -108,7 +123,9 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                     setScore(score);
                 }
                 else{
-                    Toast toast = Toast.makeText(getApplicationContext(), "Bad Word!",
+                    //System.out.println("score: "+tempscore);
+                    String str=(tempscore == -999)?"Selected!":"Bad Word!";
+                    Toast toast = Toast.makeText(getApplicationContext(), str,
                             Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.TOP|Gravity.LEFT, 400, 400);
                     toast.show();
@@ -153,7 +170,6 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     /* startNewGame: clears the state and sets up for a new game */
     void startNewGame()
     {
-        score = 0;
         gameInProgress=true;
         if(numRounds <= maxEasyRounds) level = easy;
         else level = normal;
@@ -189,8 +205,34 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         {
             for(int j=0; j< 4;j++){
                 gameboard.buttons[i][j].setOnClickListener(this);
+                //gameboard.buttons[i][j].setOnTouchListener(this);
+
                 gameboard.buttons[i][j].setOnTouchListener(new View.OnTouchListener() {
                     public boolean onTouch(View v, MotionEvent event) {
+
+                        if(/*event.getAction() == MotionEvent.ACTION_UP*/false) {
+
+                            Button current_button = (Button) v;
+                            switch (v.getId()) {
+                                case R.id.button_submit:
+                                    shakeGrid(gameboard.size * gameboard.size);
+                                    //startNewGame();
+                                    current_button.setVisibility(View.GONE);
+                                    break;
+                                default:
+                                    if (gameInProgress && gameboard.isvalidclick(current_button.getId())) {
+                                        current_button.setAlpha(0.55f);
+                                        current_button.setBackgroundColor(Color.RED);
+                                        selection = selection + current_button.getText();
+                                        gameboard.previousclick(current_button.getId());
+                                    } else {
+                                        //do what?
+
+                                    }
+                            }
+
+                        }
+
                         return gestureDetector.onTouchEvent(event);
                     }
                 });
@@ -199,13 +241,14 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
             to go with all screen sizes */
         }
 
-        //setGameBoard();
+        if(numRounds>maxEasyRounds){gameboard.showButtons();}else{gameboard.hideButtons();}
 
     }
 
     void setGameBoard()
     {
-        String str = CommManager.RequestNewGrid(BBEasyLevel, this);
+        int gamelevel = (numRounds>maxEasyRounds)?BBNormalLevel:BBEasyLevel;
+        String str = CommManager.RequestNewGrid(gamelevel, this);
         Log.v("strlen",Integer.toString(str.length()));
         gameboard.setGameboard(str);
     }
@@ -254,6 +297,34 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
     }
+    /*@Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_UP){
+
+            // Do what you want
+            return true;
+        }
+        Button current_button= (Button) v;
+        switch(v.getId()){
+            case R.id.button_submit:
+                shakeGrid(gameboard.size*gameboard.size);
+                //startNewGame();
+                current_button.setVisibility(View.GONE);
+                break;
+            default:
+                if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
+                    current_button.setAlpha(0.55f);
+                    current_button.setBackgroundColor(Color.RED);
+                    selection = selection + current_button.getText();
+                    gameboard.previousclick(current_button.getId());
+                }
+                else{
+                    //do what?
+
+                }
+        }
+        return true;
+    }*/
 
 
     @Override
@@ -267,7 +338,8 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
-                    current_button.setAlpha(0.25f);
+                    current_button.setAlpha(0.55f);
+                    current_button.setBackgroundColor(Color.RED);
                     selection = selection + current_button.getText();
                     gameboard.previousclick(current_button.getId());
                 }
@@ -298,6 +370,9 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
     public class CountDownTimerActivity extends CountDownTimer {
         Context context;
         public CountDownTimerActivity(long startTime, long interval, Context context) {
@@ -311,8 +386,12 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
 
             Intent scoreIntent = new Intent(context, Score.class);
             scoreIntent.putExtra("Score",score);
+            scoreIntent.putExtra("Round",numRounds);
+            gameInProgress=false;
+            CommManager.clearlist();
             startActivity(scoreIntent);
         }
+
 
         @Override
         public void onTick(long millisUntilFinished) {

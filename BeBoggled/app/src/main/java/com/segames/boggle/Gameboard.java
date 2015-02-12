@@ -1,5 +1,6 @@
 package com.segames.boggle;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
@@ -47,6 +48,7 @@ public class Gameboard implements GlobalConstants{
         for(Button[] g: this.buttons)
             for(Button b:g) {
                 b.setAlpha(0.55f);
+                b.setBackgroundColor(Color.BLACK);
             }
                 //b.getBackground().setAlpha(127);
         Log.v("Gameboard:","opaquing all");
