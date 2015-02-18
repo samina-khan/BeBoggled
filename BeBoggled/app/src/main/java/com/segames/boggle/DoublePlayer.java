@@ -79,7 +79,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
             public boolean onDoubleTap(MotionEvent e) {
                 //button_submit = (Button) findViewById(R.id.button_submit);
-                gameboard.opaqueButtons();
+                gameboard.opaqueButtons(getDrawable(R.drawable.whitedie));
                 int tempscore = wordscore(selection);
                 if( tempscore > -1){
                     my_list = my_list.concat("\n"+selection);

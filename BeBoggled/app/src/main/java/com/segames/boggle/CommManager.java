@@ -18,6 +18,8 @@ public class CommManager {
         BBWords1 = new BBWords(context);
         String str = BBWords1.Grid(level);
         Log.v("Server: ", str + "\n");
+
+        clientWords.clear();
         return str;
     };
     public static String SendServer(String tag, String arg){
@@ -32,6 +34,7 @@ public class CommManager {
          return BBWords1.getGridWords();
     }
     public static void clearlist(){clientWords.clear();}
-
-
+    public static String getOnGrid(String grid, String word) {
+        return "a|w|3|1|2|a|b|c|d";
+    }
 }

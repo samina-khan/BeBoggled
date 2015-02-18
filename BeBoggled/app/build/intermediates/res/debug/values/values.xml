@@ -144,6 +144,12 @@
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
     <integer name="abc_max_action_buttons">2</integer>
+    <!-- From: file:/Users/SAMINA/AndroidStudioProjects/Boggle/app/src/main/res/values/integers.xml -->
+    <eat-comment/>
+    <integer name="card_flip_time_full">300</integer>
+    <integer name="card_flip_time_half">150</integer>
+    <!-- From: file:/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -939,17 +945,30 @@
     <style name="BtnTheme">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">75dp</item>
-        <item name="android:background">@android:color/black</item>
-        <item name="android:alpha">0.55</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/whitedie</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">30dp</item>
     </style>
     <style name="BtnTheme2">
         <item name="android:background">@android:color/black</item>
-        <item name="android:alpha">0.55</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">15dp</item>
+    </style>
+    <style name="BtnTheme3">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:background">@drawable/whitedie</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+    <style name="BtnThemeScore2">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/whitedie</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:clickable">false</item>
     </style>
     <!-- From: file:/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
@@ -1139,7 +1158,7 @@
     </style>
     <style name="ScoreValueText">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">35dp</item>
+        <item name="android:textSize">30dp</item>
     </style>
     <!-- From: file:/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>

@@ -1,9 +1,12 @@
 package com.segames.boggle;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
 
 /**
  * Created by SAMINA on 1/26/15.
@@ -14,9 +17,11 @@ public class Gameboard implements GlobalConstants{
     int size;
     private Button previous_click;
 
+
     public Gameboard(int size){
         this.buttons = new Button[BBNormalLevelSize][BBNormalLevelSize];
         this.size = size;
+
     }
 
     void setGameboard(String letters)
@@ -34,6 +39,12 @@ public class Gameboard implements GlobalConstants{
             for(int j=0;j<=3; j++)
                 if(i==3 || j==3)
                     this.buttons[i][j].setVisibility(View.GONE);
+
+        for(Button[] a: buttons){
+            for(Button b: a){
+                b.setLayoutParams(new TableRow.LayoutParams(210, 210));
+            }
+        }
     }
 
     void showButtons(){
@@ -43,12 +54,12 @@ public class Gameboard implements GlobalConstants{
                     this.buttons[i][j].setVisibility(View.VISIBLE);
     }
 
-    void opaqueButtons()
+    void opaqueButtons(Drawable d)
     {
         for(Button[] g: this.buttons)
             for(Button b:g) {
-                b.setAlpha(0.55f);
-                b.setBackgroundColor(Color.BLACK);
+                //b.setAlpha(0.55f);
+                b.setBackground(d);
             }
                 //b.getBackground().setAlpha(127);
         Log.v("Gameboard:","opaquing all");
@@ -120,6 +131,46 @@ public class Gameboard implements GlobalConstants{
             }
         }
 
+    }
+    int getArrow(int buttonID) {
+        if(previous_click!=null) {
+            int previousi = 0, previousj = 0, clickedi = 0, clickedj = 0;
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (buttons[i][j].getId() == buttonID) {
+                        clickedi = i;
+                        clickedj = j;
+                    }
+                    if (buttons[i][j].getId() == previous_click.getId()) {
+                        previousi = i;
+                        previousj = j;
+                    }
+
+                }
+
+            }
+            if (clickedi < previousi) {
+                if (clickedj < previousj) return topleft;
+                else if (clickedj == previousj) return topup;
+                else return topright;
+            } else if (clickedi == previousi) {
+                if (clickedj < previousj) return midleft;
+                else if (clickedj == previousj) return -1;
+                else if(clickedj>previousj) return midright;
+            } else {
+                if (clickedj < previousj) return botleft;
+                else if (clickedj == previousj) return botdown;
+                else return botright;
+            }
+        }
+        return -1;
+
+    }
+
+    void setArrow(Drawable d){
+        if(previous_click!=null){
+            previous_click.setBackground(d);
+        }
     }
 
 

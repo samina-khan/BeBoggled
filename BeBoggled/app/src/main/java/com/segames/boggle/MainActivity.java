@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             case R.id.button_double:
                 //NumPlayers = 2;
-                Intent doubleIntent = new Intent(v.getContext(), DoublePlayer.class);
+                Intent doubleIntent = new Intent(v.getContext(), DoublePlayerAlt.class);
                 doubleIntent.putExtra("Round",Round);
                 startActivity(doubleIntent);
             default:
