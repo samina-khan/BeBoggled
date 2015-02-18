@@ -121,16 +121,9 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             @Override
             public void onClick(View view) {
                 /*
-                if (!isBackVisible) {
-                    setRightOut.setTarget((LinearLayout) findViewById(R.id.layout_front));
-                    setLeftIn.setTarget((LinearLayout) findViewById(R.id.layout_back));
-                    setRightOut.start();
-                    setLeftIn.start();
-                    isBackVisible = true;
-                }*/
                 findViewById(R.id.layout_back).setVisibility(View.VISIBLE);
                 findViewById(R.id.layout_front).setVisibility(View.GONE);
-
+                */
 
             }
         });
@@ -138,8 +131,9 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         greenarrows2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                /*
                 findViewById(R.id.layout_back).setVisibility(View.GONE);
-                findViewById(R.id.layout_front).setVisibility(View.VISIBLE);
+                findViewById(R.id.layout_front).setVisibility(View.VISIBLE);*/
             }
         });
 

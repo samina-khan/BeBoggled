@@ -28,8 +28,8 @@ public class Gameboard implements GlobalConstants{
     {
         for(int i = 0, k = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-
-                this.buttons[i][j].setText(Character.toString(letters.charAt(k++)));
+                String s = Character.toString(letters.charAt(k++));
+                this.buttons[i][j].setText(s.toUpperCase());
             }
         }
     }
