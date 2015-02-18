@@ -21,7 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
-import android.widget.TableRow;
+//import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +34,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     Gameboard gameboard;
     Drawable[] arrows = new Drawable[9];
     static int game_boardSize=4;
-
+    //Adding test comment
     //Counter variables
     private final long startTime = 20 * 1000;
     private final long interval = 1 * 1000;
