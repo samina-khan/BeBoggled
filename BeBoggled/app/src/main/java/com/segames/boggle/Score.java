@@ -55,20 +55,8 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     TableLayout table;
 
 
-
-
-    /*swipe variables*/
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
-    private Animation slideLeftIn;
-    private Animation slideLeftOut;
-    private Animation slideRightIn;
-    private Animation slideRightOut;
     private ViewFlipper viewFlipper;
-    /*end of swipe variables*/
+    private float lastX;
 
     /* OnCreate - All the start-up stuff here */
     @Override
@@ -76,26 +64,14 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score);
 
-        //viewFlipper = (ViewFlipper)findViewById(R.id.flipper);
-        //slideLeftIn = AnimationUtils.loadAnimation(this, R.animator.slide_left_in);
-        //slideLeftOut = AnimationUtils.loadAnimation(this, R.anim.slide_left_out);
-        //slideRightIn = AnimationUtils.loadAnimation(this, R.anim.slide_right_in);
-        //slideRightOut = AnimationUtils.loadAnimation(this, R.anim.slide_right_out);
-        gestureDetector = new GestureDetector(new MyGestureDetector());
-        gestureListener = new View.OnTouchListener() {
+        viewFlipper = (ViewFlipper) findViewById(R.id.flipper);
+        viewFlipper.setOnTouchListener(new View.OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return performFunc(event);
             }
-        };
-        /* Old flip animation
-        setRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(),
-                R.animator.card_flip_right_out);
+        });
 
-        setLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(),
-                R.animator.card_flip_left_in);*/
 
         score = getIntent().getExtras().getInt("Score");
         round = getIntent().getExtras().getInt("Round");
@@ -172,13 +148,56 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
 
 
     }
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event))
-            return true;
-        else
-            return false;
+
+    boolean performFunc(MotionEvent touchevent){
+        switch (touchevent.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                lastX = touchevent.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                float currentX = touchevent.getX();
+
+                // Handling left to right screen swap.
+                if (lastX < currentX) {
+
+                    // If there aren't any other children, just break.
+                    if (viewFlipper.getDisplayedChild() == 0)
+                        break;
+
+                    // Next screen comes in from left.
+                    viewFlipper.setInAnimation(this, R.anim.slide_in_from_left);
+                    // Current screen goes out from right.
+                    viewFlipper.setOutAnimation(this, R.anim.slide_out_to_right);
+
+                    // Display next screen.
+                    viewFlipper.showNext();
+                }
+
+                // Handling right to left screen swap.
+                if (lastX > currentX) {
+
+                    // If there is a child (to the left), kust break.
+                    if (viewFlipper.getDisplayedChild() == 1)
+                        break;
+
+                    // Next screen comes in from right.
+                    viewFlipper.setInAnimation(this, R.anim.slide_in_from_right);
+                    // Current screen goes out from left.
+                    viewFlipper.setOutAnimation(this, R.anim.slide_out_to_left);
+
+                    // Display previous screen.
+                    viewFlipper.showPrevious();
+                }
+                break;
+        }
+        return true;
     }
+
+    /*
+    public boolean onTouchEvent(MotionEvent touchevent) {
+        return performFunc(touchevent);
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -386,29 +405,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         }
 
     }
-    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
-                    // right to left swipe
-                    if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        viewFlipper.setInAnimation(slideLeftIn);
-                        viewFlipper.setOutAnimation(slideLeftOut);
-                        viewFlipper.showNext();
-                    }
-                    else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        viewFlipper.setInAnimation(slideRightIn);
-                        viewFlipper.setOutAnimation(slideRightOut);
-                        viewFlipper.showPrevious();
-                    }
-            }
-            catch (Exception e) {                 // nothing
-            }
-            return false;
-        }
-    }
+
 
 
 }

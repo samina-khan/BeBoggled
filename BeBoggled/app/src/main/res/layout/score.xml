@@ -71,12 +71,61 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-<!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
         <ViewFlipper
         android:layout_width="match_parent"
         android:layout_height="match_parent"
             android:id="@+id/flipper">-->
             <!-- full word list layout -->
+            <LinearLayout
+                android:id="@+id/layout_front"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/black"
+                android:alpha="0.75"
+                android:visibility="visible"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:paddingTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:textSize="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Possible words:"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:id="@+id/greenarrows"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/greenarrows_back"
+                        android:layout_gravity="right"
+                        android:clickable="true"/>
+                </LinearLayout>
+                <ListView
+                    android:id="@+id/allwordslist"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:dividerHeight="0dp"
+
+                    >
+
+                </ListView>
+            </LinearLayout>
                 <LinearLayout
                     android:id="@+id/layout_back"
                     android:layout_width="match_parent"
@@ -123,53 +172,10 @@
                     </ListView>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout_front"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@android:color/black"
-                    android:alpha="0.75"
-                    android:visibility="visible"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                    <TextView
-                        android:paddingTop="10dp"
-                        android:paddingLeft="5dp"
-                        android:textSize="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:text="Possible words:"
-                        />
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                    <ImageView
-                        android:id="@+id/greenarrows"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="30dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/greenarrows"
-                        android:layout_gravity="right"
-                        android:clickable="true"/>
-                    </LinearLayout>
-                    <ListView
-                        android:id="@+id/allwordslist"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:dividerHeight="0dp"
 
-                        >
 
-                    </ListView>
-                </LinearLayout>
-
-       <!-- </ViewFlipper>-->
+       </ViewFlipper>
+            </LinearLayout>
 
 
             <LinearLayout

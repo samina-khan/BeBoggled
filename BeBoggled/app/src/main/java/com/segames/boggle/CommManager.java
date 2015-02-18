@@ -35,6 +35,6 @@ public class CommManager {
     }
     public static void clearlist(){clientWords.clear();}
     public static String getOnGrid(String grid, String word) {
-        return "a|w|3|1|2|a|b|c|d";
+        return "3|w|d|a|2|a|e|c|1";
     }
 }
