@@ -74,6 +74,11 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
     }
 
+    /*
+        TODO - Centered Toast style window will announce broadcasts from BBMultiplayer when
+            multiplayer is about to start, rounds start and end, and multiplayer game ends.
+     */
+
     void setDoubleTap()
     {
         gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
