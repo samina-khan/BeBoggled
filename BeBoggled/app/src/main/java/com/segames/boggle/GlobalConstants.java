@@ -29,6 +29,16 @@ public interface GlobalConstants {
     /*
      *  BBServer constants
     */
+    public static final int BBSingleMode = 0;
+    public static final int BBDoubleBasicMode = 1;
+    public static final int BBDoubleCutthroatMode = 2;
+
+    public static final int MaxEasyRounds = 3;
+
+    //messages
+    public static final String ok = "ok";
+    public static final String wordAlreadyGuessed = "Word already guessed";
+    public static final String wordIncorrect = "Incorrect";
 
 
 
