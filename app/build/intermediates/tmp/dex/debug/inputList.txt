@@ -1,5 +1,5 @@
-/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/classes/debug
-/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8221a37cd56ab6ce29877543e0f382c8d5ede74b.jar
-/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9f8e964fd8cfe2cc6046dc2cae174d6b019df100.jar
-/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/classes-39ff42cb93aff2f36cdf3996ca5239ebf512b21a.jar
-/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/classes-1e5ca28eb6c72de610bc41b99e800fc4795a47ef.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/classes/debug
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8221a37cd56ab6ce29877543e0f382c8d5ede74b.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6a2c87a5a36c094063d4e2ee0e0c0b994da08608.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f15578edd0237ac9780e2d212d4d79cf93c6bd69.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f4d701d36ca8bfcd29ebe3f67e2ed978cd74bdea.jar

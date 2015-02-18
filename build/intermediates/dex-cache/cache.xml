@@ -2,18 +2,32 @@
 <items version="2" >
 
     <item
+        jar="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f15578edd0237ac9780e2d212d4d79cf93c6bd69.jar" />
+    </item>
+    <item
+        jar="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/classes-39ff42cb93aff2f36cdf3996ca5239ebf512b21a.jar" />
+    </item>
+    <item
+        jar="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6a2c87a5a36c094063d4e2ee0e0c0b994da08608.jar" />
+    </item>
+    <item
         jar="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
         <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/classes-1e5ca28eb6c72de610bc41b99e800fc4795a47ef.jar" />
-    </item>
-    <item
-        jar="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9f8e964fd8cfe2cc6046dc2cae174d6b019df100.jar" />
     </item>
     <item
         jar="/Users/SAMINA/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
@@ -23,11 +37,18 @@
         <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8221a37cd56ab6ce29877543e0f382c8d5ede74b.jar" />
     </item>
     <item
-        jar="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/classes-39ff42cb93aff2f36cdf3996ca5239ebf512b21a.jar" />
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/SAMINA/AndroidStudioProjects/Boggle/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9f8e964fd8cfe2cc6046dc2cae174d6b019df100.jar" />
+    </item>
+    <item
+        jar="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f4d701d36ca8bfcd29ebe3f67e2ed978cd74bdea.jar" />
     </item>
 
 </items>
