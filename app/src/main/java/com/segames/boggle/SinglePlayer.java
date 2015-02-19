@@ -2,6 +2,8 @@ package com.segames.boggle;
 
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TableLayout;
 //import android.widget.TableRow;
@@ -59,6 +63,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     private Sensor mAccelerometer;
     private ShakeEventManager mShakeDetector;
     private String gridstr;
+    Animation rotation;
 
 
     /**********************Body of code ************************/
@@ -100,6 +105,8 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         scoretext.setText(Integer.toString(score));
         arrows= new Drawable[]{getDrawable(R.drawable.yellowtopleft), getDrawable(R.drawable.yellowup_alt), getDrawable(R.drawable.yellowtopright),
                 getDrawable(R.drawable.yellowleft_alt), getDrawable(R.drawable.yellowdie),getDrawable(R.drawable.yellowright_alt), getDrawable(R.drawable.yellowbottomleft), getDrawable(R.drawable.yellowdown_alt), getDrawable(R.drawable.yellowbottomright)};
+
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
 
     }
 
@@ -258,8 +265,18 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
 
     }
 
+    void startWobble(){
+        for(Button[] a: gameboard.buttons){
+            for(Button b: a){
+                b.startAnimation(rotation);
+            }
+
+        }
+    }
+
     void setGameBoard()
     {
+        startWobble();
         int gamelevel = (numRounds>BBMaxEasyRounds)?BBNormalLevel:BBEasyLevel;
         String str = CommManager.RequestNewGrid(gamelevel, this);
         gridstr=str;

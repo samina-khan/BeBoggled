@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -57,6 +59,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
 
 
     Drawable[] arrows = new Drawable[9];
+    Animation rotation;
 
     /* OnCreate - All the start-up stuff here */
     @Override
@@ -91,6 +94,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
         arrows= new Drawable[]{getDrawable(R.drawable.yellowtopleft), getDrawable(R.drawable.yellowup_alt), getDrawable(R.drawable.yellowtopright),
                 getDrawable(R.drawable.yellowleft_alt), getDrawable(R.drawable.yellowdie),getDrawable(R.drawable.yellowright_alt), getDrawable(R.drawable.yellowbottomleft), getDrawable(R.drawable.yellowdown_alt), getDrawable(R.drawable.yellowbottomright)};
 
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
     }
 
     void setTimer(Context c){
@@ -203,33 +207,6 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
                gameboard.buttons[i][j].setOnTouchListener(new View.OnTouchListener() {
 
                     public boolean onTouch(View v, MotionEvent event) {
-/*
-                        //Button current_button = (Button) v;
-
-                        //real thing below:
-                        final int action = event.getAction();
-                        switch (action & MotionEvent.ACTION_MASK) {
-
-                            case MotionEvent.ACTION_DOWN: {
-                                //current_button.performClick();
-                                System.out.println("xcood:"+String.valueOf((int) event.getX())+" text:"+current_button.getText());
-                                System.out.println("ycood:"+String.valueOf((int) event.getY()));
-                                break;
-                            }
-
-                            case MotionEvent.ACTION_MOVE:{
-                                System.out.println("Setting red");
-                                //current_button.performClick();
-                                System.out.println("xcood:"+String.valueOf((int) event.getX())+" text:"+current_button.getText());
-                                System.out.println("ycood:"+String.valueOf((int) event.getY()));
-                                break;
-                            }
-                            case MotionEvent.ACTION_UP:{
-                                wordfinalize();
-                                break;
-                            }
-                        }
-                        //return true;*/
 
                         return gestureDetector.onTouchEvent(event);
                     }
@@ -241,8 +218,18 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
 
     }
 
+    void startWobble(){
+        for(Button[] a: gameboard.buttons){
+            for(Button b: a){
+                b.startAnimation(rotation);
+            }
+
+        }
+    }
+
     void setGameBoard()
     {
+        startWobble();
         String str = CommManager.RequestNewGrid(BBNormalLevel, this);
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
