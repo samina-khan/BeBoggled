@@ -137,8 +137,8 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             }
         });
 
-        arrows= new Drawable[]{getDrawable(R.drawable.yellowtopleft), getDrawable(R.drawable.yellowup_alt), getDrawable(R.drawable.yellowtopright),
-                getDrawable(R.drawable.yellowleft_alt), getDrawable(R.drawable.yellowdie),getDrawable(R.drawable.yellowright_alt), getDrawable(R.drawable.yellowbottomleft), getDrawable(R.drawable.yellowdown_alt), getDrawable(R.drawable.yellowbottomright)};
+        arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
+                getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
 
 
     }
@@ -290,7 +290,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             nexti = orderPosMap[idx] / size;
             nextj = orderPosMap[idx] % size;
             setArrows(previousi, previousj, nexti, nextj);
-            gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setBackground(getDrawable(R.drawable.yellowdie));
+            gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setBackground(getResources().getDrawable(R.drawable.yellowdie));
         }
 
     }
@@ -313,7 +313,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             }
 
             if(arrowindex == -1){
-                gridbtns[nexti][nextj].setBackground(getDrawable(R.drawable.yellowdie));
+                gridbtns[nexti][nextj].setBackground(getResources().getDrawable(R.drawable.yellowdie));
             }
             else{
                 gridbtns[previousi][previousj].setBackground(arrows[arrowindex]);

@@ -91,8 +91,8 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
 
         TextView scoretext = (TextView) findViewById(R.id.score);
         scoretext.setText(Integer.toString(score));
-        arrows= new Drawable[]{getDrawable(R.drawable.yellowtopleft), getDrawable(R.drawable.yellowup_alt), getDrawable(R.drawable.yellowtopright),
-                getDrawable(R.drawable.yellowleft_alt), getDrawable(R.drawable.yellowdie),getDrawable(R.drawable.yellowright_alt), getDrawable(R.drawable.yellowbottomleft), getDrawable(R.drawable.yellowdown_alt), getDrawable(R.drawable.yellowbottomright)};
+        arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
+                getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
 
         rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
     }
@@ -120,7 +120,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
 
 
         if(selection.length() >= BBMinWordLength) {
-            gameboard.opaqueButtons(getDrawable(R.drawable.whitedie));
+            gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore > 0) {
                 my_list = my_list.concat("\n" + selection);
@@ -295,7 +295,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
                     int arrow_index = gameboard.getArrow(current_button.getId());
-                    current_button.setBackground(getDrawable(R.drawable.yellowdie));
+                    current_button.setBackground(getResources().getDrawable(R.drawable.yellowdie));
                     if(arrow_index!=-1)gameboard.setArrow(arrows[arrow_index]);
 
                     selection = selection + current_button.getText();
