@@ -35,6 +35,7 @@ public class CommManager {
     }
     public static void clearlist(){clientWords.clear();}
     public static String getOnGrid(String grid, String word) {
-        return "3|w|d|a|2|a|e|c|1";
+        String [] word_scored = word.split(":");
+        return BBWords1.annotatedGrid(grid,word_scored[0]);
     }
 }
