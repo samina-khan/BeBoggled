@@ -1,7 +1,5 @@
 package com.segames.boggle;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Global constants; implement this interface to access them conveniently.
  */
@@ -32,6 +30,14 @@ public interface GlobalConstants {
     /*
      *  BBServer constants
     */
+
+
+    //messages
+    public static final String ok = "ok";
+    public static final String wordAlreadyGuessed = "Word already guessed";
+    public static final String wordIncorrect = "Incorrect";
+
+
 
     /*
      * BBClient display constants
