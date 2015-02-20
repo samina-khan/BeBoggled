@@ -2,9 +2,7 @@ package com.segames.boggle;
 
 //import android.os.CountDownTimer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -296,7 +294,7 @@ public class BBServerDouble implements GlobalConstants{
 
     public static void main(String[] args) throws IOException {
 
-        BBServerDouble server = new BBServerDouble(BBDoubleBasicMode,BBNormalLevel,bbWords);
+        /*BBServerDouble server = new BBServerDouble(BBDoubleBasicMode,BBNormalLevel,bbWords);
         server.getBBWords().Grid(BBNormalLevel);
         server.getBBWords().dumpGrid();
         System.out.println( "\n" + server.getBBWords().getGridWords() + "\n");
@@ -369,7 +367,7 @@ public class BBServerDouble implements GlobalConstants{
         System.out.println("\n The winner of the game is : " + server.winner());
 
         System.out.println("\nEnd of test");
-
+        */
 
     }
 
