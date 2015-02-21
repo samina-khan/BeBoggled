@@ -1,7 +1,6 @@
 package com.segames.boggle;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +8,20 @@ import java.util.List;
 /**
  * Created by SAMINA on 1/27/15.
  */
-public class CommManager {
+public class CommManagerMulti {
     private static BBWords BBWords1;
     private static List clientWords = new ArrayList();
+    private static List clientWords2 = new ArrayList();
+
 
     public static String RequestNewGrid(int level, Context context){
         BBWords1 = new BBWords(context);
         String str = BBWords1.Grid(level);
-        clientWords.clear();
+        clearlists();
         return str;
     }
 
+    //tag argument unused: use as you see fit
     public static String SendServer(String tag, String arg){
         int value = clientWords.contains(arg)?(-999):BBWords1.wordsValue(arg);
         if(value > 0){clientWords.add(arg);}
@@ -29,6 +31,17 @@ public class CommManager {
     public static String getGridWords(){
          return BBWords1.getGridWords();
     }
-    public static void clearlist(){clientWords.clear();}
-    public static String getOnGrid(String grid, String word) {return BBWords1.annotatedGrid(grid,word);}
+
+    /* Change required: Server provides opponent's words */
+    public static String getOppWords(){
+        return BBWords1.getGridWords();
+    }
+
+    public static void clearlists(){
+        clientWords.clear(); clientWords2.clear();
+    }
+    public static String getOnGrid(String grid, String word) {
+        return BBWords1.annotatedGrid(grid,word);
+    }
+
 }

@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
-    private final long startTime = 5 * 1000;
+    private final long startTime = 15 * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
 
@@ -66,6 +66,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.double_playeralt);
+
 
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
@@ -154,7 +155,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
 
         if(selection.length()>=3)
         {
-            String serverreply = CommManager.SendServer("word",selection);
+            String serverreply = CommManagerMulti.SendServer("word",selection);
             score = Integer.parseInt(serverreply);
         }
 
@@ -230,7 +231,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
     void setGameBoard()
     {
         startWobble();
-        String str = CommManager.RequestNewGrid(BBNormalLevel, this);
+        String str = CommManagerMulti.RequestNewGrid(BBNormalLevel, this);
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
         gameboard.setGameboard(str);
