@@ -14,28 +14,21 @@ public class CommManager {
     private static List clientWords = new ArrayList();
 
     public static String RequestNewGrid(int level, Context context){
-
         BBWords1 = new BBWords(context);
         String str = BBWords1.Grid(level);
-        Log.v("Server: ", str + "\n");
-
         clientWords.clear();
         return str;
-    };
+    }
+
     public static String SendServer(String tag, String arg){
-        int value = 0;
-        value = clientWords.contains(arg)?(-999):BBWords1.wordsValue(arg);
+        int value = clientWords.contains(arg)?(-999):BBWords1.wordsValue(arg);
         if(value > 0){clientWords.add(arg);}
-        //return Integer.toString(BBWords1.wordsValue(arg));
         return Integer.toString(value);
-    };
+    }
 
     public static String getGridWords(){
          return BBWords1.getGridWords();
     }
     public static void clearlist(){clientWords.clear();}
-    public static String getOnGrid(String grid, String word) {
-        String [] word_scored = word.split(":");
-        return BBWords1.annotatedGrid(grid,word_scored[0]);
-    }
+    public static String getOnGrid(String grid, String word) {return BBWords1.annotatedGrid(grid,word);}
 }

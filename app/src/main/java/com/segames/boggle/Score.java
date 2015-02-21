@@ -240,9 +240,9 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 TextView tv = (TextView) v;
-                String positions = CommManager.getOnGrid(gridstr,tv.getText().toString());
-                System.out.println("text:"+tv.getText().toString()+" length"+tv.getText().toString().length());
-                displayOnGrid(tv.getText().toString().length() - 3,positions);
+                String [] word = tv.getText().toString().split(":");
+                String positions = CommManager.getOnGrid(gridstr,word[0]);
+                displayOnGrid(word[0].length(),positions);
             }
         });
     }
@@ -257,11 +257,9 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 TextView tv = (TextView) v;
-                tv.setTextColor(Color.GREEN);
-                String positions = CommManager.getOnGrid(gridstr,tv.getText().toString());
-                System.out.println("text:"+tv.getText().toString()+" length"+tv.getText().toString().length());
-                displayOnGrid(tv.getText().toString().length() - 3,positions);
-                //displayOnGrid(3,positions);
+                String [] word = tv.getText().toString().split(":");
+                String positions = CommManager.getOnGrid(gridstr,word[0]);
+                displayOnGrid(word[0].length(),positions);
             }
         });
     }
