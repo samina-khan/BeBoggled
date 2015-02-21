@@ -1,8 +1,5 @@
 package com.segames.boggle;
 
-
-
-import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
@@ -10,31 +7,19 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 
 public class Score extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
@@ -49,9 +34,6 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     int score=0;
     int mode = -1;
     String gridstr = "";
-    boolean isBackVisible = false;
-    AnimatorSet setRightOut;
-    AnimatorSet setLeftIn;
     TableLayout table;
 
 
@@ -114,7 +96,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         roundval.setText("Round: "+round);
 
         populateList();
-        populateOppList();
+        if(mode!=BBSingleMode)populateOppList();
 
         ImageView greenarrows = (ImageView) findViewById(R.id.greenarrows);
         greenarrows.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +213,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     }
 
     private void populateList(){
-        String[] words = CommManager.getGridWords().split("\\|");
+        String[] words = (mode!=BBSingleMode)?CommManagerMulti.getGridWords().split("\\|"):CommManager.getGridWords().split("\\|");
         final CustomListAdapter adapter = new CustomListAdapter(this, android.R.layout.simple_list_item_1,words);
         final ListView allwordslist = (ListView) findViewById(R.id.allwordslist);
         allwordslist.setAdapter(adapter);
@@ -241,14 +223,14 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 TextView tv = (TextView) v;
                 String [] word = tv.getText().toString().split(":");
-                String positions = CommManager.getOnGrid(gridstr,word[0]);
+                String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
                 displayOnGrid(word[0].length(),positions);
             }
         });
     }
 
     private void populateOppList(){
-        String[] words = CommManager.getGridWords().split("\\|");
+        String[] words = CommManagerMulti.getOppWords().split("\\|");
         final CustomListAdapter adapter = new CustomListAdapter(this, android.R.layout.simple_list_item_1,words);
         final ListView allwordslist = (ListView) findViewById(R.id.opplist);
         allwordslist.setAdapter(adapter);
@@ -258,7 +240,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 TextView tv = (TextView) v;
                 String [] word = tv.getText().toString().split(":");
-                String positions = CommManager.getOnGrid(gridstr,word[0]);
+                String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
                 displayOnGrid(word[0].length(),positions);
             }
         });
