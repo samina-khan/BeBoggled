@@ -241,8 +241,8 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                 TextView tv = (TextView) v;
                 String positions = CommManager.getOnGrid(gridstr,tv.getText().toString());
-                //displayOnGrid(tv.getText().toString().length(),positions);
-                displayOnGrid(3,positions);
+                System.out.println("text:"+tv.getText().toString()+" length"+tv.getText().toString().length());
+                displayOnGrid(tv.getText().toString().length() - 3,positions);
             }
         });
     }
@@ -259,18 +259,32 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                 TextView tv = (TextView) v;
                 tv.setTextColor(Color.GREEN);
                 String positions = CommManager.getOnGrid(gridstr,tv.getText().toString());
-                //displayOnGrid(tv.getText().toString().length(),positions);
-                displayOnGrid(3,positions);
+                System.out.println("text:"+tv.getText().toString()+" length"+tv.getText().toString().length());
+                displayOnGrid(tv.getText().toString().length() - 3,positions);
+                //displayOnGrid(3,positions);
             }
         });
     }
 
+    void cleanGrid(){
+        int i=0;
+        for(Button[] a: gridbtns){
+            for(Button b: a){
+                b.setText(Character.toString(gridstr.charAt(i++)));
+                b.setBackground(getResources().getDrawable(R.drawable.whitedie));
+            }
+        }
+    }
+
     private void displayOnGrid(int length, String positions){
+        System.out.println("length:"+length);
         String[] letters = positions.split("\\|");
         int i=0;
         int previousi = -1,previousj = -1, nexti = -1, nextj = -1;
         //int lastIndex = -1, newIndex = -1;
         int[] orderPosMap = new int[length];
+
+        cleanGrid();
 
         //first pass through grid: maps the sequential order of the letters of the word with
         // the sequential position at which they are available on the grid
@@ -284,7 +298,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         }
         //Second pass through the grid: setting arrows sequentially (with info from orderPosMap
         for(int idx = 0; idx<orderPosMap.length;idx++){
-            gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setText(Integer.toString(idx+1));
+            //gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setText(Integer.toString(idx+1));
             previousi = nexti;
             previousj = nextj;
             nexti = orderPosMap[idx] / size;
