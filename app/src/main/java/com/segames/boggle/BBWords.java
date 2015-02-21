@@ -73,7 +73,7 @@ public class BBWords implements GlobalConstants {
         String str = "";
         for (int i = 0; i < current_grid_size; i++) {
             for (int j = 0; j < current_grid_size; j++) {
-                str += annotated_grid[i][j];
+                str += annotated_grid[i][j] + "|";
             }
         }
         return str;
@@ -244,7 +244,7 @@ public class BBWords implements GlobalConstants {
                 // reset the annotated grid to an unmarked state
                 set_annotated_grid(grid_str);
                 // check if word found starting at this grid cell
-                if(gridSearch(word, i, j,0) == true) {
+                if(gridSearch(word, i, j, 1) == true) {
                     return true;
                 }
             }
