@@ -25,6 +25,8 @@ public interface GlobalConstants {
     public static final int BBWordsSuccess = 0;
     public static final int BBWordsFailure = -1;
 
+    public static final int BBGameTime = 15;
+
     public static final String BBValidWordsFile = "bbwords.txt";
 
     /*
@@ -32,6 +34,9 @@ public interface GlobalConstants {
     */
     public static final int ServerRole = 1;
     public static final int ClientRole = 2;
+
+    public static final int BBPlayer_Me = 1;
+    public static final int BBPlayer_Other = 2;
 
     //messages
     public static final String ok = "ok";
