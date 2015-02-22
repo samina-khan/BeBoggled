@@ -36,6 +36,8 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".SetUpServerClient"/>
-
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".DeviceListActivity"/>
     </application>
 </manifest>
