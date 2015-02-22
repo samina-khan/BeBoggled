@@ -30,7 +30,8 @@ public interface GlobalConstants {
     /*
      *  BBServer constants
     */
-
+    public static final int ServerRole = 1;
+    public static final int ClientRole = 2;
 
     //messages
     public static final String ok = "ok";

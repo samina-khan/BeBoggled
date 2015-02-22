@@ -5,7 +5,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".BluetoothSetUp">
     <!--android:background="@android:color/black"-->
 
 
@@ -24,38 +24,25 @@
 
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
-            android:id="@+id/button_single"
+            android:id="@+id/button_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="90dp"
             android:background="@android:color/transparent"
-            android:text="@string/single_mode"
+            android:text="Be Server"
             android:textAllCaps="false"
             android:textColor="#ffffffff"
             android:textSize="@dimen/button_text_size"/>
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
-            android:id="@+id/button_double"
+            android:id="@+id/button_client"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
+            android:layout_marginLeft="190dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:text="@string/double_mode"
-            android:textAllCaps="false"
-            android:textColor="#ffffffff"
-            android:textSize="@dimen/button_text_size"
-            android:typeface="sans"/>
-        <!-- Set OnClickListener to trigger results when pressed -->
-        <Button
-            android:id="@+id/button_doubleCT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:text="@string/double_modeCT"
+            android:text="Be Client"
             android:textAllCaps="false"
             android:textColor="#ffffffff"
             android:textSize="@dimen/button_text_size"

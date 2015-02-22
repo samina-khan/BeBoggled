@@ -1,6 +1,5 @@
 package com.segames.boggle;
 
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +32,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     int round=1;
     int score=0;
     int mode = -1;
+    int role;
     String gridstr = "";
     TableLayout table;
 
@@ -80,6 +80,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             }
         }
         else{
+            role = getIntent().getExtras().getInt("Role");
             populateBigGrid();
             size= BBNormalLevelSize;
         }
@@ -188,13 +189,20 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                         startActivity(singleIntent);
                         break;
                     case BBDoubleBasicMode:
-                        Intent doubleIntent = new Intent(v.getContext(), DoublePlayerAlt.class);
+                        Intent doubleIntent = new Intent(v.getContext(), DoublePlayer.class);
                         doubleIntent.putExtra("Round",round+1);
                         doubleIntent.putExtra("Score",score);
+                        doubleIntent.putExtra("Role",role);
+                        doubleIntent.putExtra("Mode",BBDoubleBasicMode);
                         startActivity(doubleIntent);
                         break;
                     case BBDoubleCutMode:
-                        //startActivity(cutThroatIntent);
+                        Intent cutIntent = new Intent(v.getContext(), DoublePlayerCut.class);
+                        cutIntent.putExtra("Round",round+1);
+                        cutIntent.putExtra("Score",score);
+                        cutIntent.putExtra("Role",role);
+                        cutIntent.putExtra("Mode",BBDoubleCutMode);
+                        startActivity(cutIntent);
                         break;
                 }
 

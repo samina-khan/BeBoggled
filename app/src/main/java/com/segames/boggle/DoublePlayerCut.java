@@ -1,3 +1,4 @@
+/*Double Player CutThroat Mode - exact same code as DoublePlayerAlt for now*/
 package com.segames.boggle;
 
 
@@ -27,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
+public class DoublePlayerCut extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
     private final long startTime = 15 * 1000;
     private final long interval = 1 * 1000;
@@ -38,6 +39,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
     static boolean gameInProgress = false;
     static int score = 0;
     static int numRounds = 1;
+    static int role;
     static String selection="";
 
     //XML components
@@ -68,10 +70,13 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
         setContentView(R.layout.double_playeralt);
 
 
+        /* Getting arguments from previous screen */
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
+        role = getIntent().getExtras().getInt("Role");
+        System.out.println("Role: "+role);
+
         Log.v("Round",Integer.toString(numRounds));
-        //int blevelsize = (numRounds>maxEasyRounds)?BBNormalLevelSize:BBEasyLevelSize;
         gameboard = new Gameboard(BBNormalLevelSize);
 
 
@@ -347,6 +352,7 @@ public class DoublePlayerAlt extends ActionBarActivity implements View.OnClickLi
             scoreIntent.putExtra("Round",numRounds);
             scoreIntent.putExtra("Mode", BBDoubleBasicMode);
             scoreIntent.putExtra("Grid",gridstr);
+            scoreIntent.putExtra("Role",role);
             gameInProgress=false;
 
             startActivity(scoreIntent);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.segames.boggle">
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
 
     <application
         android:allowBackup="true"
@@ -24,10 +26,16 @@
             android:screenOrientation="portrait"/>
         <activity
             android:screenOrientation="portrait"
-            android:name=".DoublePlayerAlt"/>
+            android:name=".DoublePlayer"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".DoublePlayerCut"/>
         <activity
             android:screenOrientation="portrait"
             android:name=".MainActivity"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".SetUpServerClient"/>
 
     </application>
 </manifest>

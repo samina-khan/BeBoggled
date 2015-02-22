@@ -9,11 +9,12 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+public class MainActivity extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
     //All variables
     Button button_single;
     Button button_double;
+    Button button_doubleCT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         button_double = (Button) findViewById(R.id.button_double);
         button_double.setOnClickListener(this);
+
+        button_doubleCT = (Button) findViewById(R.id.button_doubleCT);
+        button_doubleCT.setOnClickListener(this);
     }
 
     @Override
@@ -38,17 +42,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         switch(v.getId()){
 
             case R.id.button_single:
-                //Round = 1;
                 Intent singleIntent = new Intent(v.getContext(), SinglePlayer.class);
                 singleIntent.putExtra("Round",Round);
                 singleIntent.putExtra("Score",Score);
                 startActivity(singleIntent);
                 break;
             case R.id.button_double:
-                //NumPlayers = 2;
-                Intent doubleIntent = new Intent(v.getContext(), DoublePlayerAlt.class);
+                Intent doubleIntent = new Intent(v.getContext(), SetUpServerClient.class);
                 doubleIntent.putExtra("Round",Round);
+                doubleIntent.putExtra("Score",Score);
+                doubleIntent.putExtra("Mode",BBDoubleBasicMode);
                 startActivity(doubleIntent);
+                break;
+            case R.id.button_doubleCT:
+                //NumPlayers = 2;
+                Intent doubleCTIntent = new Intent(v.getContext(), SetUpServerClient.class);
+                doubleCTIntent.putExtra("Round",Round);
+                doubleCTIntent.putExtra("Score",Score);
+                doubleCTIntent.putExtra("Mode",BBDoubleCutMode);
+                startActivity(doubleCTIntent);
+                break;
             default:
 
         }
