@@ -33,6 +33,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private final long startTime = 15 * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
+    private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
 
 
     //Game state variables
@@ -160,7 +161,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         if(selection.length()>=3)
         {
-            String serverreply = CommManagerMulti.SendServer("word",selection,role);
+            String serverreply = commManagerMulti1.SendServer("word",selection);
             score = Integer.parseInt(serverreply);
         }
 
@@ -236,16 +237,18 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void setGameBoard()
     {
         startWobble();
+        // commManagerMulti1.setMultiGrid("1234567890123456");
 
         /*EDWARD: This is where we were requesting for a new Grid from CommManager. Polling the server happens here now.
         * Timer doesn't start till grid is received */
 
         String str = "";
-        while(str.equals("")){
+        //while(str.equals("")){
             str = CommManagerMulti.getGridFromServer(role, this);
-        }
+        //}
 
         //String str = CommManagerMulti.RequestNewGrid(BBNormalLevel, this);
+        // str = "1234567890123456";
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
         gameboard.setGameboard(str);
