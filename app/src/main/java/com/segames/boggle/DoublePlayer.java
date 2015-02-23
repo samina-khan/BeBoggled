@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 public class DoublePlayer extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
-    private final long startTime = 15 * 1000;
+    private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
     private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
@@ -237,18 +237,15 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void setGameBoard()
     {
         startWobble();
-        // commManagerMulti1.setMultiGrid("1234567890123456");
 
         /*EDWARD: This is where we were requesting for a new Grid from CommManager. Polling the server happens here now.
         * Timer doesn't start till grid is received */
 
         String str = "";
         //while(str.equals("")){
-            str = CommManagerMulti.getGridFromServer(role, this);
+            str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleBasicMode, this);
         //}
 
-        //String str = CommManagerMulti.RequestNewGrid(BBNormalLevel, this);
-        // str = "1234567890123456";
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
         gameboard.setGameboard(str);
