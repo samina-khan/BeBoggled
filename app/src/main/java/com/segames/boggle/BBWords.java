@@ -104,8 +104,18 @@ public class BBWords implements GlobalConstants {
         System.out.println(get_annotated_grid_str());
     }
 
+    public void putGrid(int level, String str){
+        set_level(level);
+        set_grid(str);
+        gridWords = new TreeMap<String, Integer>();
+        find_all_grid_words(get_grid_str());
+    }
 
-    public String Grid(int level){
+    public String getGrid() {
+        return get_grid_str();
+    }
+
+    private void set_level(int level) {
         current_level = level;
         switch(current_level) {
             case BBEasyLevel:
@@ -117,6 +127,11 @@ public class BBWords implements GlobalConstants {
             default:
                 current_grid_size = -1;
         }
+    }
+
+    public String Grid(int level){
+
+        set_level(level);
 
         // This TreeMap is just used to get a count of the words in the grid
         //      that are from the valid list

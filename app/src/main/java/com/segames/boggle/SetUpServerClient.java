@@ -186,8 +186,11 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     }
                     // Check for the incoming gridStr from Server
                     //if(currentRole == ClientRole) {
-                        if(readMessage.length() >= BBMinGridLen)
+                        if(readMessage.length() >= BBMinGridLen){
                             CommManagerMulti.setMultiGrid(readMessage);
+
+                        }
+
                         else
                             CommManagerMulti.writeOppWord(readMessage);
                     //} else { // This is opponent's guessed word

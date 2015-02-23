@@ -39,10 +39,17 @@ public class CommManagerMulti implements GlobalConstants {
 
     public static void setMultiGrid(String str) { multi_grid_str = new String(str); }
 
-    public static String RequestNewGrid(int level, Context context){
+    public static String xRequestNewGrid(int level, int mode, int role, Context context){
         BBWords1 = new BBWords(context);
-        BBServerDouble1 = new BBServerDouble(level,BBDoubleCutMode,BBWords1);
-        String str = BBWords1.Grid(level);
+        BBServerDouble1 = new BBServerDouble(level,mode,BBWords1);
+        String str = "";
+        if(role == ServerRole) {
+            str = BBWords1.Grid(level);
+        } else {
+            BBWords1.putGrid(level, multi_grid_str);
+            str = BBWords1.getGrid();
+        }
+
         clearlists();
         return str;
     }
@@ -66,14 +73,27 @@ public class CommManagerMulti implements GlobalConstants {
     }
 
     // Empty until the shake occurs from the Server. Only used by the client
-    public static String getGridFromServer(int role, Context context) {
+    public static String getGridFromServer(int role, int level, int mode, Context context) {
+
+        BBWords1 = new BBWords(context);
+        BBServerDouble1 = new BBServerDouble(level,mode,BBWords1);
 
         // TODO - this should probably use a synchronous function to update multi_grid_str
+        String str = "";
         if(role == ServerRole) {
-            setMultiGrid(RequestNewGrid(BBNormalLevel, context));
-            sendMessage(multi_grid_str);
+            str = BBWords1.Grid(level);
+            sendMessage(str);
+            return str;
+        } else {
+            if(multi_grid_str != "") {
+                BBWords1.putGrid(level,multi_grid_str);
+                str = BBWords1.getGrid();
+            } else {
+                BBWords1.putGrid(level,"nogridfromserver");
+            }
         }
-        return multi_grid_str;
+        clearlists();
+        return BBWords1.getGrid();
     }
 
     public static void writeOppWord(String opp_word) {
