@@ -1,14 +1,16 @@
-/*Double Player CutThroat Mode - exact same code as DoublePlayerAlt for now*/
 package com.segames.boggle;
 
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
@@ -16,12 +18,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -64,6 +68,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     Animation rotation;
 
     /* OnCreate - All the start-up stuff here */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         System.out.println("Role: "+role);
 
         Log.v("Round",Integer.toString(numRounds));
+        //int blevelsize = (numRounds>maxEasyRounds)?BBNormalLevelSize:BBEasyLevelSize;
         gameboard = new Gameboard(BBNormalLevelSize);
 
 
@@ -122,6 +128,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     void wordfinalize(){
 
 
@@ -136,10 +143,24 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 setScore(score);
             } else {
                 String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
-                Toast toast = Toast.makeText(getApplicationContext(), str,
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                mp.start();
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.toast_layout,
+                        (ViewGroup) findViewById(R.id.toast_layout_root));
+
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText("Bad Word!");
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+               /* Toast toast = Toast.makeText(getApplicationContext(), str,
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.LEFT, 400, 400);
-                toast.show();
+                toast.show();*/
             }
             gameboard.clearpreviousclick();
             selection = "";
@@ -297,6 +318,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         Button current_button= (Button) v;
