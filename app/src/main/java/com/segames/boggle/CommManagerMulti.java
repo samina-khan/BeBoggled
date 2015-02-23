@@ -64,8 +64,9 @@ public class CommManagerMulti implements GlobalConstants {
     }
 
     // Empty until the shake occurs from the Server. Only used by the client
-    public static String getGridFromServer() {
+    public static String getGridFromServer(int role, Context context) {
         String str = "";
+        if(role == ServerRole) { str = RequestNewGrid(BBNormalLevel, context); }
         return str;
     }
 

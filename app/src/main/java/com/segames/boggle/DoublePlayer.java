@@ -236,7 +236,16 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void setGameBoard()
     {
         startWobble();
-        String str = CommManagerMulti.RequestNewGrid(BBNormalLevel, this);
+
+        /*EDWARD: This is where we were requesting for a new Grid from CommManager. Polling the server happens here now.
+        * Timer doesn't start till grid is received */
+
+        String str = "";
+        while(str.equals("")){
+            str = CommManagerMulti.getGridFromServer(role, this);
+        }
+
+        //String str = CommManagerMulti.RequestNewGrid(BBNormalLevel, this);
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
         gameboard.setGameboard(str);
