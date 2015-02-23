@@ -175,8 +175,8 @@ public class BBServerDouble implements GlobalConstants{
 
         if(playerId == 1){
             if(guessedWordsP1.containsKey(candidateWord) != true){
-                //if(BBWords.isWordValid(candidateWord) && BBWords.searchForWord(BBWords.get_grid_str(), candidateWord)){
-                if(BBWords.isWordValid(candidateWord)){
+                if(BBWords.isWordValid(candidateWord) && this.getBBWords().searchForWord(this.getBBWords().get_grid_str(),candidateWord)){
+                //if(BBWords.isWordValid(candidateWord)){
                     if(BBWords.wordsValue(candidateWord) >= 0){
                         //score update
                         this.updateGameScore(BBWords.wordsValue(candidateWord),playerId);
@@ -196,8 +196,8 @@ public class BBServerDouble implements GlobalConstants{
             }
         }else if(playerId == 2){
             if(guessedWordsP2.containsKey(candidateWord) != true){
-                //if(BBWords.isWordValid(candidateWord) && BBWords.searchForWord(BBWords.get_grid_str(), candidateWord)){
-                if(BBWords.isWordValid(candidateWord)){
+                if(BBWords.isWordValid(candidateWord) && this.getBBWords().searchForWord(this.getBBWords().get_grid_str(),candidateWord)){
+                //if(BBWords.isWordValid(candidateWord)){
                     if(BBWords.wordsValue(candidateWord) >= 0){
                         //score update
                         this.updateGameScore(BBWords.wordsValue(candidateWord),playerId);
@@ -224,8 +224,8 @@ public class BBServerDouble implements GlobalConstants{
         String message = ok;
 
         if(allGuessedWords.containsKey(candidateWord) != true){
-            //if(BBWords.isWordValid(candidateWord) && BBWords.searchForWord(BBWords.get_grid_str(), candidateWord)){
-            if(BBWords.isWordValid(candidateWord)){
+            if(BBWords.isWordValid(candidateWord) && this.getBBWords().searchForWord(this.getBBWords().get_grid_str(),candidateWord)){
+            //if(BBWords.isWordValid(candidateWord)){
                 if(BBWords.wordsValue(candidateWord) >= 0){
                     //score update
                     this.updateGameScore(BBWords.wordsValue(candidateWord),playerId);
