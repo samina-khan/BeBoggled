@@ -47,7 +47,7 @@ public class CommManagerMulti implements GlobalConstants {
     }
 
     //tag argument unused: use as you see fit
-    public static String SendServer(String tag, String arg){
+    public static String SendServer(String tag, String arg, int role){
         //int value = clientWords.contains(arg)?(-999):BBServer.wordsValue(arg);
         //if(value > 0){clientWords.add(arg);
         String rslt_str = BBServerDouble1.incomeWord(arg,BBPlayer_Me);

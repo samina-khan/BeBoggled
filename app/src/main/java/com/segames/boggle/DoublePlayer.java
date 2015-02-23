@@ -160,7 +160,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         if(selection.length()>=3)
         {
-            String serverreply = CommManagerMulti.SendServer("word",selection);
+            String serverreply = CommManagerMulti.SendServer("word",selection,role);
             score = Integer.parseInt(serverreply);
         }
 
