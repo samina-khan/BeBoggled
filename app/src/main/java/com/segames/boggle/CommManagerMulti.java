@@ -35,8 +35,9 @@ public class CommManagerMulti implements GlobalConstants {
     private static List clientWords = new ArrayList();
     private static List clientWords2 = new ArrayList();
 
-    private static String grid_from_server_str;
+    private static String multi_grid_str = "";
 
+    public static void setMultiGrid(String str) { multi_grid_str = new String(str); }
 
     public static String RequestNewGrid(int level, Context context){
         BBWords1 = new BBWords(context);
@@ -47,7 +48,8 @@ public class CommManagerMulti implements GlobalConstants {
     }
 
     //tag argument unused: use as you see fit
-    public static String SendServer(String tag, String arg, int role){
+    public static String SendServer(String tag, String arg){ // Role is not needed here
+
         //int value = clientWords.contains(arg)?(-999):BBServer.wordsValue(arg);
         //if(value > 0){clientWords.add(arg);
         String rslt_str = BBServerDouble1.incomeWord(arg,BBPlayer_Me);
@@ -65,9 +67,13 @@ public class CommManagerMulti implements GlobalConstants {
 
     // Empty until the shake occurs from the Server. Only used by the client
     public static String getGridFromServer(int role, Context context) {
-        String str = "";
-        if(role == ServerRole) { str = RequestNewGrid(BBNormalLevel, context); }
-        return str;
+
+        // TODO - this should probably use a synchronous function to update multi_grid_str
+        if(role == ServerRole) {
+            setMultiGrid(RequestNewGrid(BBNormalLevel, context));
+            sendMessage(multi_grid_str);
+        }
+        return multi_grid_str;
     }
 
     public static void writeOppWord(String opp_word) {

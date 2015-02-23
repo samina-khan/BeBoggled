@@ -38,6 +38,8 @@ public interface GlobalConstants {
     public static final int BBPlayer_Me = 1;
     public static final int BBPlayer_Other = 2;
 
+    public static final int BBMinGridLen = 9;
+
     //messages
     public static final String ok = "ok";
     public static final String wordAlreadyGuessed = "Word already guessed";

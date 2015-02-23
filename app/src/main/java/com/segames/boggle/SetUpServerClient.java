@@ -1,25 +1,20 @@
 /* Choice for whether server or client */
 package com.segames.boggle;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -52,6 +47,8 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
     //All variables
     Button button_server;
     Button button_client;
+
+    private int currentRole = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +84,12 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
         switch(v.getId()){
 
             case R.id.button_server:
-
-                Intent serverIntent = new Intent(context,DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-
                 Intent sIntent = new Intent(v.getContext(), targetClass);
                 sIntent.putExtra("Round",Round);
                 sIntent.putExtra("Score",Score);
                 sIntent.putExtra("Mode",Mode);
                 sIntent.putExtra("Role",ServerRole);
+                currentRole = ServerRole;
                 startActivity(sIntent);
                 break;
             case R.id.button_client:
@@ -104,6 +98,7 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                 cIntent.putExtra("Score",Score);
                 cIntent.putExtra("Mode",Mode);
                 cIntent.putExtra("Role",ClientRole);
+                currentRole = ClientRole;
                 startActivity(cIntent);
             default:
         }
@@ -128,13 +123,12 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
                     // Bluetooth is now enabled, so set up a chat session
-                    //setupChat();
+                    setupChat();
                 } else {
                     // User did not enable Bluetooth or an error occurred
-                    // TODO
-                    //Log.d(TAG, "BT not enabled");
-                    //Toast.makeText(getActivity(), R.string.bt_not_enabled_leaving,
-                    //        Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "BT is not enabled");
+                    Toast.makeText(getApplicationContext(), "Bluetooth is not enabled", Toast.LENGTH_LONG).show();
+                    // TODO - how do I get the Activity?
                     //getActivity().finish();
                 }
         }
@@ -190,11 +184,15 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     if (null != context) {
                         Toast.makeText(context, "Other player says " + readMessage, Toast.LENGTH_SHORT).show();
                     }
-/*                    if(role)
-                    if(readMessage.length() == 16) {
-                        CommManagerMulti.setGrid();
-                    }*/
-                    CommManagerMulti.writeOppWord(readMessage);
+                    // Check for the incoming gridStr from Server
+                    //if(currentRole == ClientRole) {
+                        if(readMessage.length() >= BBMinGridLen)
+                            CommManagerMulti.setMultiGrid(readMessage);
+                        else
+                            CommManagerMulti.writeOppWord(readMessage);
+                    //} else { // This is opponent's guessed word
+                     //   CommManagerMulti.writeOppWord(readMessage);
+                    //}
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -239,11 +237,13 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         // getMenuInflater().inflate(R.menu.menu_main, menu);
-        /*
 
-        Intent serverIntent = new Intent(context,DeviceListActivity.class);
+        /*
+            Give the user a list of paired devices to choose from
+         */
+        Intent serverIntent = new Intent(context, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-        */
+
         return true;
     }
 
