@@ -60,7 +60,7 @@ public class BBWords implements GlobalConstants {
         }
     }
 
-    private String get_grid_str() {
+    public String get_grid_str() {
         String str = "";
         for (int i = 0; i < current_grid_size; i++) {
             for (int j = 0; j < current_grid_size; j++) {
