@@ -140,6 +140,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 setScore(score);
             } else {
                 String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
+
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 LayoutInflater inflater = getLayoutInflater();
@@ -147,14 +148,15 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                         (ViewGroup) findViewById(R.id.toast_layout_root));
 
                 TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText("Bad Word!");
+                text.setText(str);
 
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.setView(layout);
                 toast.show();
-                /*Toast toast = Toast.makeText(getApplicationContext(), str,
+                /*
+                Toast toast = Toast.makeText(getApplicationContext(), str,
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP | Gravity.LEFT, 400, 400);
                 toast.show();*/
