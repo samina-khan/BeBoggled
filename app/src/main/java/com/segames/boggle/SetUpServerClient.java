@@ -87,6 +87,10 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
         switch(v.getId()){
 
             case R.id.button_server:
+
+                Intent serverIntent = new Intent(context,DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+
                 Intent sIntent = new Intent(v.getContext(), targetClass);
                 sIntent.putExtra("Round",Round);
                 sIntent.putExtra("Score",Score);
@@ -186,6 +190,11 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     if (null != context) {
                         Toast.makeText(context, "Other player says " + readMessage, Toast.LENGTH_SHORT).show();
                     }
+/*                    if(role)
+                    if(readMessage.length() == 16) {
+                        CommManagerMulti.setGrid();
+                    }*/
+                    CommManagerMulti.writeOppWord(readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -211,7 +220,9 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
 
         // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = new BluetoothChatService(getApplicationContext(), mHandler);
+        CommManagerMulti.setChatService(mChatService,context);
     }
+
 
     private void connectDevice(Intent data, boolean secure) {
         // Get the device MAC address
@@ -228,8 +239,11 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         // getMenuInflater().inflate(R.menu.menu_main, menu);
+        /*
+
         Intent serverIntent = new Intent(context,DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+        */
         return true;
     }
 
