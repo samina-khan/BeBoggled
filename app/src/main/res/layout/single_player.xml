@@ -205,7 +205,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@+id/layout_2"
     >
-    <!--android:layout_marginTop="325dp"-->
+    <!--
 
     <Button
         android:id="@+id/button_submit"
@@ -213,7 +213,7 @@
         android:layout_height="wrap_content"
         android:text="@string/shake"
         android:visibility="visible"
-        />
+        />-->
 </LinearLayout>
 
     <LinearLayout
@@ -261,5 +261,21 @@
         android:text="@string/exit"
         android:visibility="gone"
         />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/shakeoverlay"
+        android:alpha="0.90"
+        android:visibility="visible">
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shake"
+            android:visibility="visible"
+            />
     </LinearLayout>
 </RelativeLayout>

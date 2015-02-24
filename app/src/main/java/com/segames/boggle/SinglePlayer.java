@@ -112,7 +112,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
 
-        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
+
 
     }
 
@@ -135,7 +135,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
             setAuxiliary();
             setGameBoard();
             startNewGame();
-            countDownTimer.start();
+
         }
     }
 
@@ -172,17 +172,13 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                         (ViewGroup) findViewById(R.id.toast_layout_root));
 
                 TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText("Bad Word!");
+                text.setText(str);
 
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
-               /* Toast toast = Toast.makeText(getApplicationContext(), str,
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP | Gravity.LEFT, 400, 400);
-                toast.show();*/
             }
             gameboard.clearpreviousclick();
             selection = "";
@@ -225,6 +221,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
             public void onShake(int count) {
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
+                findViewById(R.id.overlay).setVisibility(View.GONE);
             }
         });
     }
@@ -287,6 +284,37 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     }
 
     void startWobble(){
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startWobbleSlow();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+        for(Button[] a: gameboard.buttons){
+            for(Button b: a){
+                b.startAnimation(rotation);
+            }
+
+        }
+    }
+    void startWobbleSlow(){
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobbleslow);
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameboard.setGameboard(gridstr);
+                countDownTimer.start();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
         for(Button[] a: gameboard.buttons){
             for(Button b: a){
                 b.startAnimation(rotation);
@@ -302,7 +330,6 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         String str = CommManager.RequestNewGrid(gamelevel, this);
         gridstr=str;
         Log.v("strlen",Integer.toString(str.length()));
-        gameboard.setGameboard(str);
     }
 
     //All button stuff: click, double tap, pressing back
@@ -315,6 +342,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 shakeGrid(gameboard.size*gameboard.size);
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
+                findViewById(R.id.overlay).setVisibility(View.GONE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
