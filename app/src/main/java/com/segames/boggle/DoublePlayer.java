@@ -104,7 +104,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
 
-        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
+
     }
 
     void setTimer(Context c){
@@ -245,6 +245,17 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     }
 
     void startWobble(){
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobble);
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startWobbleSlow();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
         for(Button[] a: gameboard.buttons){
             for(Button b: a){
                 b.startAnimation(rotation);
@@ -252,22 +263,34 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         }
     }
+    void startWobbleSlow(){
+        rotation = AnimationUtils.loadAnimation(this, R.anim.wobbleslow);
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameboard.setGameboard(gridstr);
+                countDownTimer.start();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+        for(Button[] a: gameboard.buttons){
+            for(Button b: a){
+                b.startAnimation(rotation);
+            }
 
+        }
+    }
     void setGameBoard()
     {
         startWobble();
-
-        /*EDWARD: This is where we were requesting for a new Grid from CommManager. Polling the server happens here now.
-        * Timer doesn't start till grid is received */
-
         String str = "";
-        //while(str.equals("")){
-            str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleBasicMode, this);
-        //}
-
+        str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleBasicMode, this);
         Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
-        gameboard.setGameboard(str);
+        //gameboard.setGameboard(str);
     }
 
     void setShakeDetection()
@@ -283,6 +306,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             public void onShake(int count) {
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
+                findViewById(R.id.overlay).setVisibility(View.GONE);
             }
         });
     }
@@ -325,6 +349,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 shakeGrid(gameboard.size*gameboard.size);
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
+                findViewById(R.id.overlay).setVisibility(View.GONE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
