@@ -263,7 +263,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
         String str = "";
         //while(str.equals("")){
-        str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleBasicMode, this);
+        str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleCutMode, this);
         //}
 
         Log.v("strlen",Integer.toString(str.length()));
