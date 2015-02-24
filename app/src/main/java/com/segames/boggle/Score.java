@@ -246,6 +246,12 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         allwordslist.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
+                /*
+                TextView tv = (TextView) v;
+                String [] word = tv.getText().toString().split(":");
+                String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
+                System.out.println(positions);
+                displayOnGrid(word[0].length(),positions);*/
                 TextView tv = (TextView) v;
                 String [] word = tv.getText().toString().split(":");
                 String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);

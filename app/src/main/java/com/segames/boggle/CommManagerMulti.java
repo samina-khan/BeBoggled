@@ -136,6 +136,8 @@ public class CommManagerMulti implements GlobalConstants {
         clientWords.clear(); clientWords2.clear();
     }
     public static String getOnGrid(String grid, String word) {
+        System.out.println("grid: "+grid+" word: "+word+" result: "+BBWords1.annotatedGrid(grid,word));
+        word = word.toLowerCase();
         return BBWords1.annotatedGrid(grid,word);
     }
 
