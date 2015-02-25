@@ -36,12 +36,14 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
+    private CountDownTimer poller;
     private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
 
 
     //Game state variables
     static boolean gameInProgress = false;
     static int score = 0;
+    static int oppscore = 0;
     static int numRounds = 1;
     static int role;
     static String selection="";
@@ -132,14 +134,14 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         if(selection.length() >= BBMinWordLength) {
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
-            if (tempscore > 0) {
-                my_list = my_list.concat("\n" + selection);
+            if (tempscore == -888 || tempscore > 0) {
+                my_list = my_list.concat(selection+"\n");
                 Log.v("Tag", selection);
                 my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {
-                String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
+                String str = (tempscore == -999 ) ? "Selected!" : "Bad Word!";
 
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
@@ -304,6 +306,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onShake(int count) {
+                Toast.makeText(getApplicationContext(), "Shaken!", Toast.LENGTH_SHORT).show();
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
@@ -388,7 +391,19 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    void populateOppInfo(){
+        oppscore = CommManagerMulti.getOppScore();
+        TextView score_opp = (TextView) findViewById(R.id.score_opp);
+        if(score_opp!= null) score_opp.setText(Integer.toString(oppscore));
 
+        String[] oppwords = CommManagerMulti.getOppWordsList().split("\\|");
+        String str = "";
+        for(String word: oppwords){
+            str = str + word + "\n";
+        }
+        if(opp_wordlist!=null)opp_wordlist.setText(str);
+
+    }
 
     public class CountDownTimerActivity extends CountDownTimer {
         Context context;
@@ -399,26 +414,31 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         @Override
         public void onFinish() {
-            Intent scoreIntent = new Intent(context, Score.class);
+            if(gameInProgress) {
+                Intent scoreIntent = new Intent(context, Score.class);
 
-            scoreIntent.putExtra("Score",score);
-            scoreIntent.putExtra("Round",numRounds);
-            scoreIntent.putExtra("Mode", BBDoubleBasicMode);
-            scoreIntent.putExtra("Grid",gridstr);
-            scoreIntent.putExtra("Role",role);
-            gameInProgress=false;
-
-            startActivity(scoreIntent);
+                scoreIntent.putExtra("Score", score);
+                scoreIntent.putExtra("OppScore", oppscore);
+                scoreIntent.putExtra("Round", numRounds);
+                scoreIntent.putExtra("Mode", BBDoubleBasicMode);
+                scoreIntent.putExtra("Grid", gridstr);
+                scoreIntent.putExtra("Role", role);
+                gameInProgress = false;
+                startActivity(scoreIntent);
+            }
         }
 
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timer = (TextView) findViewById(R.id.timer);
-            if(millisUntilFinished/1000 == 30){
-                timer.setTextColor(Color.RED);
+            if(gameInProgress) {
+                populateOppInfo();
+                timer = (TextView) findViewById(R.id.timer);
+                if (millisUntilFinished / 1000 == 30) {
+                    timer.setTextColor(Color.RED);
+                }
+                timer.setText("" + String.format("%02d", ((millisUntilFinished / 1000) / 60)) + ":" + String.format("%02d", ((millisUntilFinished / 1000) % 60)));
             }
-            timer.setText("" + String.format("%02d",((millisUntilFinished/1000)/60))+":"+String.format("%02d",((millisUntilFinished/1000)%60)));
         }
     }
 }

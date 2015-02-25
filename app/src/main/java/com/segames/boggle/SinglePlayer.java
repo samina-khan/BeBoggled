@@ -219,6 +219,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onShake(int count) {
+                Toast.makeText(getApplicationContext(), "Shaken!", Toast.LENGTH_SHORT).show();
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);

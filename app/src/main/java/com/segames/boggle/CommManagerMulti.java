@@ -61,6 +61,7 @@ public class CommManagerMulti implements GlobalConstants {
         //if(value > 0){clientWords.add(arg);
         String rslt_str = BBServerDouble1.incomeWord(arg,BBPlayer_Me);
         if(rslt_str == wordAlreadyGuessed) return "-999";
+        if(rslt_str == wordOppGuessed) return "-888";
         if(rslt_str == wordIncorrect) return "0";
 
         sendMessage(arg);
@@ -116,6 +117,15 @@ public class CommManagerMulti implements GlobalConstants {
         }
         return str;
     }
+    public static String getOppWordsList(){
+        ArrayList<String> gridWords = BBServerDouble1.getGuessedWordsP2List();
+
+        String str = "";
+        for(String word: gridWords){
+            str += word + "|";
+        }
+        return str;
+    }
 
     private static void sendMessage(String message) {
         // Check that we're actually connected before trying anything
@@ -139,6 +149,10 @@ public class CommManagerMulti implements GlobalConstants {
         System.out.println("grid: "+grid+" word: "+word+" result: "+BBWords1.annotatedGrid(grid,word));
         word = word.toLowerCase();
         return BBWords1.annotatedGrid(grid,word);
+    }
+
+    public static int getOppScore(){
+        return BBServerDouble1.getGameScoreP2();
     }
 
 }

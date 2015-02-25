@@ -42,6 +42,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     //Game state variables
     static boolean gameInProgress = false;
     static int score = 0;
+    static int oppscore = 0;
     static int numRounds = 1;
     static int role;
     static String selection="";
@@ -135,13 +136,26 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore > 0) {
-                my_list = my_list.concat("\n" + selection);
+                my_list = my_list.concat(selection+"\n");
                 Log.v("Tag", selection);
                 my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {
-                String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
+                System.out.println("tempscore "+tempscore);
+                String str="";
+                switch (tempscore){
+                    case -999 :
+                        str = "Selected!";
+                        break;
+                    case -888 :
+                        str = "Opponent Selected!";
+                        break;
+                    case 0:
+                        str = "Bad Word!";
+                        break;
+                }
+                /*String str = (tempscore == -999 || tempscore == -888) ? "Selected!" : "Bad Word!";*/
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 LayoutInflater inflater = getLayoutInflater();
@@ -149,7 +163,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                         (ViewGroup) findViewById(R.id.toast_layout_root));
 
                 TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText("Bad Word!");
+                text.setText(str);
 
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -305,6 +319,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
             @Override
             public void onShake(int count) {
+                Toast.makeText(getApplicationContext(), "Shaken!", Toast.LENGTH_SHORT).show();
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
@@ -391,7 +406,20 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     }
 
 
+    void populateOppInfo(){
+        oppscore = CommManagerMulti.getOppScore();
+        TextView score_opp = (TextView) findViewById(R.id.score_opp);
+        if(score_opp!= null) score_opp.setText(Integer.toString(oppscore));
 
+        String[] oppwords = CommManagerMulti.getOppWords().split("\\|");
+        String str = "";
+        for(String word: oppwords){
+            String[] words = word.split(":");
+            str = str + words[0] + "\n";
+        }
+        if(opp_wordlist!=null)opp_wordlist.setText(str);
+
+    }
     public class CountDownTimerActivity extends CountDownTimer {
         Context context;
         public CountDownTimerActivity(long startTime, long interval, Context context) {
@@ -401,26 +429,32 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
         @Override
         public void onFinish() {
-            Intent scoreIntent = new Intent(context, Score.class);
+            if(gameInProgress) {
+                Intent scoreIntent = new Intent(context, Score.class);
 
-            scoreIntent.putExtra("Score",score);
-            scoreIntent.putExtra("Round",numRounds);
-            scoreIntent.putExtra("Mode", BBDoubleBasicMode);
-            scoreIntent.putExtra("Grid",gridstr);
-            scoreIntent.putExtra("Role",role);
-            gameInProgress=false;
+                scoreIntent.putExtra("Score", score);
+                scoreIntent.putExtra("OppScore", oppscore);
+                scoreIntent.putExtra("Round", numRounds);
+                scoreIntent.putExtra("Mode", BBDoubleCutMode);
+                scoreIntent.putExtra("Grid", gridstr);
+                scoreIntent.putExtra("Role", role);
+                gameInProgress = false;
 
-            startActivity(scoreIntent);
+                startActivity(scoreIntent);
+            }
         }
 
 
         @Override
         public void onTick(long millisUntilFinished) {
-            timer = (TextView) findViewById(R.id.timer);
-            if(millisUntilFinished/1000 == 30){
-                timer.setTextColor(Color.RED);
+            if(gameInProgress) {
+                populateOppInfo();
+                timer = (TextView) findViewById(R.id.timer);
+                if (millisUntilFinished / 1000 == 30) {
+                    timer.setTextColor(Color.RED);
+                }
+                timer.setText("" + String.format("%02d", ((millisUntilFinished / 1000) / 60)) + ":" + String.format("%02d", ((millisUntilFinished / 1000) % 60)));
             }
-            timer.setText("" + String.format("%02d",((millisUntilFinished/1000)/60))+":"+String.format("%02d",((millisUntilFinished/1000)%60)));
         }
     }
 }

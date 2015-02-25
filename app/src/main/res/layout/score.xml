@@ -11,6 +11,7 @@
     android:orientation="vertical"
 
 >
+ <!--
     <TextView
         android:id = "@+id/CongoText"
         style = "@style/ScoreText"
@@ -18,7 +19,26 @@
         android:layout_height="wrap_content"
         android:text="Great!"
         android:visibility="gone"
-        />
+        /> -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+        android:id = "@+id/ScoreVal"
+        style = "@style/ScoreValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score: 10"/>
+        <TextView
+            android:id = "@+id/ScoreValOpp"
+            android:layout_alignParentRight="true"
+            style = "@style/ScoreValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opponent Score: 10"
+            android:visibility="gone"
+            /></RelativeLayout>
     <TextView
         android:id = "@+id/RoundVal"
         style = "@style/ScoreValueText"
@@ -26,12 +46,7 @@
         android:layout_height="wrap_content"
         android:text="Round: 10"
         android:visibility="gone"/>
-    <TextView
-        android:id = "@+id/ScoreVal"
-        style = "@style/ScoreValueText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score: 10"/>
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

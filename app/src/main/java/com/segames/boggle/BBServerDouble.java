@@ -3,6 +3,7 @@ package com.segames.boggle;
 //import android.os.CountDownTimer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -28,7 +29,8 @@ public class BBServerDouble implements GlobalConstants{
     //guessed words per player String = word / Integer = word value
     private HashMap<String,Integer> guessedWordsP1 = new HashMap();
     private HashMap<String,Integer> guessedWordsP2 = new HashMap();
-
+    private ArrayList<String> list_guessedWordsP1 = new ArrayList<>();
+    private ArrayList<String> list_guessedWordsP2 = new ArrayList<>();
     //timer
     private final long startTime = 60 * 1000;
     private final long interval = 1 * 1000;
@@ -93,6 +95,13 @@ public class BBServerDouble implements GlobalConstants{
         return guessedWordsP2;
     }
 
+    public ArrayList<String> getGuessedWordsP1List() {
+        return list_guessedWordsP1;
+    }
+
+    public ArrayList<String> getGuessedWordsP2List() {
+        return list_guessedWordsP2;
+    }
 
     //setters
     public void setGameMode(int gameMode) {
@@ -183,6 +192,7 @@ public class BBServerDouble implements GlobalConstants{
 
                         //update of guessedWords of player 1
                         guessedWordsP1.put(candidateWord,BBWords.wordsValue(candidateWord));
+                        list_guessedWordsP1.add(candidateWord);
                     }
                 }
                 else{
@@ -204,6 +214,7 @@ public class BBServerDouble implements GlobalConstants{
 
                         //update of guessedWords of player 1
                         guessedWordsP2.put(candidateWord,BBWords.wordsValue(candidateWord));
+                        list_guessedWordsP2.add(candidateWord);
                     }
                 }
                 else{
@@ -236,9 +247,11 @@ public class BBServerDouble implements GlobalConstants{
                     if(playerId == 1){
                         //update of guessedWords of player 1
                         guessedWordsP1.put(candidateWord,BBWords.wordsValue(candidateWord));
+                        list_guessedWordsP1.add(candidateWord);
                     }else if (playerId == 2){
                         //update of guessedWords of player 2
                         guessedWordsP2.put(candidateWord,BBWords.wordsValue(candidateWord));
+                        list_guessedWordsP2.add(candidateWord);
                     }
 
                 }
@@ -250,7 +263,13 @@ public class BBServerDouble implements GlobalConstants{
         }
         else{
             //word submitted was already guessed by the player
-            return wordAlreadyGuessed;
+            if(guessedWordsP2.containsKey(candidateWord)){
+                return wordOppGuessed;
+            }
+            else{
+                return wordAlreadyGuessed;
+            }
+
         }
 
         return message;

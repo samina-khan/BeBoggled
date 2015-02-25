@@ -182,12 +182,13 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Log.v(TAG,"Me: " + readMessage);
                     if (null != context) {
-                        Toast.makeText(context, "Other player says " + readMessage, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Other player says " + readMessage, Toast.LENGTH_SHORT).show();
                     }
                     // Check for the incoming gridStr from Server
                     //if(currentRole == ClientRole) {
                         if(readMessage.length() >= BBMinGridLen){
                             CommManagerMulti.setMultiGrid(readMessage);
+                            Toast.makeText(context, "Shake", Toast.LENGTH_SHORT).show();
 
                         }
 

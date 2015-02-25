@@ -31,6 +31,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
 
     int round=1;
     int score=0;
+    int oppscore = 0;
     int mode = -1;
     int role;
     String gridstr = "";
@@ -58,6 +59,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         score = getIntent().getExtras().getInt("Score");
         round = getIntent().getExtras().getInt("Round");
         mode = getIntent().getExtras().getInt("Mode");
+        if(mode!=BBSingleMode){oppscore = getIntent().getExtras().getInt("OppScore");}
         gridstr = getIntent().getStringExtra("Grid");
 
         Log.v("Score",Integer.toString(score));
@@ -92,8 +94,13 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         button_main.setOnClickListener(this);
 
         TextView scoreval = (TextView)findViewById(R.id.ScoreVal);
+        if(mode!=BBSingleMode){
+            TextView scorevalopp = (TextView)findViewById(R.id.ScoreValOpp);
+            scorevalopp.setText("Opponent Score "+oppscore);
+            scorevalopp.setVisibility(View.VISIBLE);
+        }
         TextView roundval = (TextView)findViewById(R.id.RoundVal);
-        scoreval.setText("Great, Your Score is "+score);
+        scoreval.setText("Your Score "+score);
         roundval.setText("Round: "+round);
 
         populateList();
