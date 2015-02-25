@@ -97,6 +97,13 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         TextView scoreval = (TextView)findViewById(R.id.ScoreVal);
         if(mode!=BBSingleMode){
             TextView scorevalopp = (TextView)findViewById(R.id.ScoreValOpp);
+            TextView winner = (TextView)findViewById(R.id.Winner);
+
+            if(oppscore > score) winner.setText("You Lost!");
+            else if (oppscore < score) winner.setText("You Won!");
+            else winner.setText("You Tied!");
+            winner.setVisibility(View.VISIBLE);
+
             scorevalopp.setText("Opponent Score "+oppscore);
             scorevalopp.setVisibility(View.VISIBLE);
         }
