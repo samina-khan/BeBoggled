@@ -4,13 +4,13 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="8dp"
+    android:padding="5dp"
     android:background="#DAAA"
     >
-    <ImageView android:src="@drawable/redface"
+    <ImageView android:src="@drawable/rsz_emoticon_sad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="5dp"
         />
     <TextView android:id="@+id/text"
         android:layout_width="wrap_content"
