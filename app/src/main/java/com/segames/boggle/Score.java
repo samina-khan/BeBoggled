@@ -51,7 +51,8 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         viewFlipper.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return performFunc(event);
+                if(mode!=BBSingleMode){return performFunc(event);}
+                else return true;
             }
         });
 

@@ -175,7 +175,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 text.setText(str);
 
                 Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                //toast.setGravity(Gravity.CENTER_VERTICAL, 0, 200);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();

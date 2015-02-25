@@ -204,6 +204,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/layout_2"
+    android:orientation="vertical"
     >
     <!--
 
@@ -267,8 +268,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/shakeoverlay"
-        android:alpha="0.90"
+        android:background="@drawable/clearshake"
         android:visibility="visible">
         <Button
             android:id="@+id/button_submit"
