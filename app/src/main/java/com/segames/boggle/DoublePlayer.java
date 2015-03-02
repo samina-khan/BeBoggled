@@ -35,7 +35,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
-    private CountDownTimer countDownTimer;
+    private static CountDownTimer countDownTimer;
     private CountDownTimer poller;
     private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
 
@@ -68,6 +68,10 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
     Drawable[] arrows = new Drawable[9];
     Animation rotation;
+
+    static void synchroStart() {
+        countDownTimer.start();
+    }
 
     /* OnCreate - All the start-up stuff here */
     @Override
@@ -192,9 +196,9 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void shakeGrid(int length){
 
         if(!gameInProgress){
-            setAuxiliary();
-            setGameBoard();
-            startNewGame();
+           // setAuxiliary();
+           // setGameBoard();
+           // startNewGame();
             countDownTimer.start();
         }
     }
