@@ -1,0 +1,177 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_blue"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.segames.boggle.Scorecard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+        <!--
+           <TextView
+               android:id = "@+id/CongoText"
+               style = "@style/ScoreText"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Great!"
+               android:visibility="gone"
+               /> -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:layout_gravity="center_horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <!-- Round -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Rounds played :"
+                        android:id="@+id/roundText"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="45dp"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/round"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="45dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp" />
+
+                </LinearLayout>
+
+                <!-- Score -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Your total score :"
+                        android:id="@+id/scoreText"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/score"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp" />
+                </LinearLayout>
+
+                <!-- Opponent Score -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/oppscoreField"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Opponent score :"
+                        android:id="@+id/oppscoreText"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/oppscore"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp" />
+                </LinearLayout>
+
+                <!-- Winner display -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="You won!"
+                    android:id="@+id/winner"
+                    android:textColor="#ffffffff"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:enabled="false"
+                    android:textColorHighlight="#ff000000"
+                    android:textStyle="bold|italic"
+                    android:textSize="40dp"
+                    android:visibility="gone" />
+
+
+                <!-- Buttons: Next Round, End Game -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <Button
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/button_close"
+                        android:text="Close"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="17dp"
+                        android:background="@drawable/greenbutton"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

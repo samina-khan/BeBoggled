@@ -225,8 +225,19 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             case R.id.button_main:
                 /*
 */
-                Intent mainIntent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(mainIntent);
+                Intent scorecard = new Intent(v.getContext(), Scorecard.class);
+                /*if(mode == BBSingleMode){
+                    mainIntent.putExtra("Mode",BBSingleMode);
+                }else if(mode == BBDoubleCutMode){
+                    mainIntent.putExtra("Mode",BBDoubleCutMode);
+                }else{
+                    mainIntent.putExtra("Mode",BBDoubleBasicMode);
+                }*/
+                scorecard.putExtra("Round",round);
+                scorecard.putExtra("Score",score);
+                scorecard.putExtra("Oppscore",oppscore);
+                scorecard.putExtra("Mode", mode);
+                startActivity(scorecard);
                 break;
         }
     }

@@ -2,8 +2,6 @@ package com.segames.boggle;
 
 
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +17,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,9 +27,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TableLayout;
-//import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+//import android.widget.TableRow;
 
 
 public class SinglePlayer extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
