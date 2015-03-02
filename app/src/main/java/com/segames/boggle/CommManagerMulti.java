@@ -39,21 +39,6 @@ public class CommManagerMulti implements GlobalConstants {
 
     public static void setMultiGrid(String str) { multi_grid_str = new String(str); }
 
-    public static String xRequestNewGrid(int level, int mode, int role, Context context){
-        BBWords1 = new BBWords(context);
-        BBServerDouble1 = new BBServerDouble(level,mode,BBWords1);
-        String str = "";
-        if(role == ServerRole) {
-            str = BBWords1.Grid(level);
-        } else {
-            BBWords1.putGrid(level, multi_grid_str);
-            str = BBWords1.getGrid();
-        }
-
-        clearlists();
-        return str;
-    }
-
     //tag argument unused: use as you see fit
     public static String SendServer(String tag, String arg){ // Role is not needed here
 
