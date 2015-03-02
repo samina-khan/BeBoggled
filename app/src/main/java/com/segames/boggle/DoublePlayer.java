@@ -36,12 +36,12 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
     private static CountDownTimer countDownTimer;
-    private CountDownTimer poller;
     private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
 
 
     //Game state variables
     static boolean gameInProgress = false;
+    static boolean gameboardset = false;
     static int score = 0;
     static int oppscore = 0;
     static int numRounds = 1;
@@ -70,6 +70,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     Animation rotation;
 
     static void synchroStart() {
+        gameInProgress=true;
         countDownTimer.start();
     }
 
@@ -96,6 +97,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
 
         initializeBoardButtons();
+        setAuxiliary();
 
 
         setTimer(this);
@@ -109,6 +111,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         scoretext.setText(Integer.toString(score));
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
+
 
 
     }
@@ -196,9 +199,9 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void shakeGrid(int length){
 
         if(!gameInProgress){
-           // setAuxiliary();
-           // setGameBoard();
-           // startNewGame();
+           setAuxiliary();
+           setGameBoard();
+           startNewGame();
             countDownTimer.start();
         }
     }
@@ -291,6 +294,8 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     }
     void setGameBoard()
     {
+        button_submit.setVisibility(View.GONE);
+        findViewById(R.id.overlay).setVisibility(View.GONE);
         startWobble();
         String str = "";
         str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleBasicMode, this);
@@ -411,6 +416,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
     public class CountDownTimerActivity extends CountDownTimer {
         Context context;
+
         public CountDownTimerActivity(long startTime, long interval, Context context) {
             super(startTime, interval);
             this.context=context;
@@ -435,14 +441,18 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         @Override
         public void onTick(long millisUntilFinished) {
+            //System.out.println("In Ontick");
             if(gameInProgress) {
+                if(!gameboardset){
+                setGameBoard();gameboardset=true;}
                 populateOppInfo();
+            }
                 timer = (TextView) findViewById(R.id.timer);
                 if (millisUntilFinished / 1000 == 30) {
                     timer.setTextColor(Color.RED);
                 }
                 timer.setText("" + String.format("%02d", ((millisUntilFinished / 1000) / 60)) + ":" + String.format("%02d", ((millisUntilFinished / 1000) % 60)));
-            }
+            //}
         }
     }
 }

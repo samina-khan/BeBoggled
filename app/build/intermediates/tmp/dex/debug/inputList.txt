@@ -1,5 +1,5 @@
-/Users/li/Documents/Dropbox/Documents/PSU/Winter/Software engeneering/project/BeBoggle/new.wi2015cs454-group3/app/build/intermediates/classes/debug
-/Users/li/Documents/Dropbox/Documents/PSU/Winter/Software engeneering/project/BeBoggle/new.wi2015cs454-group3/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-f6939846a101f43a3d4ce6df9d235da03d7e1ced.jar
-/Users/li/Documents/Dropbox/Documents/PSU/Winter/Software engeneering/project/BeBoggle/new.wi2015cs454-group3/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f285130d7145261ce539166c98aa3936ffa94d48.jar
-/Users/li/Documents/Dropbox/Documents/PSU/Winter/Software engeneering/project/BeBoggle/new.wi2015cs454-group3/app/build/intermediates/pre-dexed/debug/classes-9e2597db90e90677c45d6ee7d9c50b705eb2a7b8.jar
-/Users/li/Documents/Dropbox/Documents/PSU/Winter/Software engeneering/project/BeBoggle/new.wi2015cs454-group3/app/build/intermediates/pre-dexed/debug/classes-45256d64e49425b65c7526b26e1c9fd1f7c3b0d1.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/classes/debug
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8221a37cd56ab6ce29877543e0f382c8d5ede74b.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6a2c87a5a36c094063d4e2ee0e0c0b994da08608.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f15578edd0237ac9780e2d212d4d79cf93c6bd69.jar
+/Users/SAMINA/AndroidStudioProjects/BeBoggled/app/build/intermediates/pre-dexed/debug/classes-f4d701d36ca8bfcd29ebe3f67e2ed978cd74bdea.jar
