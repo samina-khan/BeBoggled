@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,14 +48,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score);
 
-        viewFlipper = (ViewFlipper) findViewById(R.id.flipper);
-        viewFlipper.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(mode!=BBSingleMode){return performFunc(event);}
-                else return true;
-            }
-        });
+
 
 
         score = getIntent().getExtras().getInt("Score");
@@ -63,13 +57,13 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         if(mode!=BBSingleMode){oppscore = getIntent().getExtras().getInt("OppScore");}
         gridstr = getIntent().getStringExtra("Grid");
 
-        Log.v("Score",Integer.toString(score));
-        Log.v("Round",Integer.toString(round));
+        //Log.v("Score",Integer.toString(score));
+        //Log.v("Round",Integer.toString(round));
         table = (TableLayout) findViewById(R.id.bigtable);
 
 
         if(mode==BBSingleMode) {
-            findViewById(R.id.greenarrows).setVisibility(View.GONE);
+            //findViewById(R.id.greenarrows).setVisibility(View.GONE);
             if (round <= BBMaxEasyRounds) {
                 table = (TableLayout) findViewById(R.id.smalltable);
                 table.setVisibility(View.VISIBLE);
@@ -81,13 +75,25 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                 populateBigGrid();
                 size= BBNormalLevelSize;
             }
+            viewFlipper = (ViewFlipper) findViewById(R.id.flipperSingle);
+            viewFlipper.setVisibility(View.VISIBLE);
+            findViewById(R.id.flipper).setVisibility(View.GONE);
         }
         else{
             role = getIntent().getExtras().getInt("Role");
             populateBigGrid();
             size= BBNormalLevelSize;
+            viewFlipper = (ViewFlipper) findViewById(R.id.flipper);
         }
 
+        viewFlipper.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //if(mode!=BBSingleMode){return performFunc(event);}
+                //else return true;
+                return performFunc(event);
+            }
+        });
 
         button_single = (Button) findViewById(R.id.button_single);
         button_single.setOnClickListener(this);
@@ -95,45 +101,44 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         button_main.setOnClickListener(this);
 
         TextView scoreval = (TextView)findViewById(R.id.ScoreVal);
+        TextView roundval = (TextView)findViewById(R.id.RoundVal);
+        scoreval.setText("Your Score "+score);
+        roundval.setText("Round: "+round);
         if(mode!=BBSingleMode){
             TextView scorevalopp = (TextView)findViewById(R.id.ScoreValOpp);
             TextView winner = (TextView)findViewById(R.id.Winner);
 
-            if(oppscore > score) winner.setText("You Lost!");
-            else if (oppscore < score) winner.setText("You Won!");
-            else winner.setText("You Tied!");
+            int result = CommManagerMulti.winnerRound();
+            if(result == BBResultOppWin) winner.setText("Round "+ round +": You Lost!");
+            else if (result == BBResultSelfWin) winner.setText("Round "+ round +": You Won!");
+            else if (result == BBResultTie)winner.setText("Round "+ round +": You Tied!");
             winner.setVisibility(View.VISIBLE);
+            roundval.setVisibility(View.GONE);
+
 
             scorevalopp.setText("Opponent Score "+oppscore);
             scorevalopp.setVisibility(View.VISIBLE);
         }
-        TextView roundval = (TextView)findViewById(R.id.RoundVal);
-        scoreval.setText("Your Score "+score);
-        roundval.setText("Round: "+round);
 
-        populateList();
-        if(mode!=BBSingleMode)populateOppList();
 
+        populateList("all");
+        populateList("your");
+        if(mode!=BBSingleMode){populateList("opponent"); findViewById(R.id.layout_opp).setVisibility(View.GONE);}
+
+        /*
         ImageView greenarrows = (ImageView) findViewById(R.id.greenarrows);
         greenarrows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                findViewById(R.id.layout_back).setVisibility(View.VISIBLE);
-                findViewById(R.id.layout_front).setVisibility(View.GONE);
-                */
-
             }
         });
         ImageView greenarrows2 = (ImageView) findViewById(R.id.greenarrows2);
         greenarrows2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                /*
-                findViewById(R.id.layout_back).setVisibility(View.GONE);
-                findViewById(R.id.layout_front).setVisibility(View.VISIBLE);*/
             }
         });
+        */
 
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
@@ -206,7 +211,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                     case BBDoubleBasicMode:
                         Intent doubleIntent = new Intent(v.getContext(), DoublePlayer.class);
                         doubleIntent.putExtra("Round",round+1);
-                        doubleIntent.putExtra("Score",score);
+                        doubleIntent.putExtra("Score",0);
                         doubleIntent.putExtra("Role",role);
                         doubleIntent.putExtra("Mode",BBDoubleBasicMode);
                         startActivity(doubleIntent);
@@ -214,7 +219,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                     case BBDoubleCutMode:
                         Intent cutIntent = new Intent(v.getContext(), DoublePlayerCut.class);
                         cutIntent.putExtra("Round",round+1);
-                        cutIntent.putExtra("Score",score);
+                        cutIntent.putExtra("Score",0);
                         cutIntent.putExtra("Role",role);
                         cutIntent.putExtra("Mode",BBDoubleCutMode);
                         startActivity(cutIntent);
@@ -246,40 +251,35 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     public void onBackPressed() {
     }
 
-    private void populateList(){
-        String[] words = (mode!=BBSingleMode)?CommManagerMulti.getGridWords().split("\\|"):CommManager.getGridWords().split("\\|");
-        final CustomListAdapter adapter = new CustomListAdapter(this, android.R.layout.simple_list_item_1,words);
-        final ListView allwordslist = (ListView) findViewById(R.id.allwordslist);
-        allwordslist.setAdapter(adapter);
-        allwordslist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        allwordslist.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> a, View v, int i, long l) {
-                TextView tv = (TextView) v;
-                String [] word = tv.getText().toString().split(":");
-                String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
-                displayOnGrid(word[0].length(),positions);
-            }
-        });
-    }
+    private void populateList(String whichList){
+        String[] words = {""};
+        ListView allwordslist = (ListView) findViewById(R.id.allwordslist);
+        switch (whichList){
+            case "all":
+                words = (mode!=BBSingleMode)?CommManagerMulti.getGridWords().split("\\|"):CommManager.getGridWords().split("\\|");
+                allwordslist = (mode!=BBSingleMode)?(ListView) findViewById(R.id.allwordslist):(ListView) findViewById(R.id.allwordslistSingle);
+                break;
+            case "opponent":
+                words = CommManagerMulti.getOppWords().split("\\|");
+                allwordslist = (ListView) findViewById(R.id.opplist);
+                break;
+            case "your":
+                words = (mode!=BBSingleMode)?CommManagerMulti.getYourWordsList().split("\\|"):CommManager.getYourWords().split(":\\|");
+                allwordslist = (mode!=BBSingleMode)?(ListView) findViewById(R.id.yourlist):(ListView) findViewById(R.id.yourlistSingle);
+                break;
+        }
 
-    private void populateOppList(){
-        String[] words = CommManagerMulti.getOppWords().split("\\|");
-        final CustomListAdapter adapter = new CustomListAdapter(this, android.R.layout.simple_list_item_1,words);
-        final ListView allwordslist = (ListView) findViewById(R.id.opplist);
+        final CustomListAdapter adapter = new CustomListAdapter(this, R.layout.listitem,words);
+
+        allwordslist.setDivider(null);
+        allwordslist.setDividerHeight(0);
         allwordslist.setAdapter(adapter);
         allwordslist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         allwordslist.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int i, long l) {
-                /*
                 TextView tv = (TextView) v;
-                String [] word = tv.getText().toString().split(":");
-                String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
-                System.out.println(positions);
-                displayOnGrid(word[0].length(),positions);*/
-                TextView tv = (TextView) v;
-                String [] word = tv.getText().toString().split(":");
+                String [] word = tv.getText().toString().toLowerCase().split(":");
                 String positions = (mode!=BBSingleMode)?CommManagerMulti.getOnGrid(gridstr,word[0]):CommManager.getOnGrid(gridstr,word[0]);
                 displayOnGrid(word[0].length(),positions);
             }
@@ -297,7 +297,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
     }
 
     private void displayOnGrid(int length, String positions){
-        System.out.println("length:"+length);
+        //System.out.println("length:"+length);
         String[] letters = positions.split("\\|");
         int i=0;
         int previousi = -1,previousj = -1, nexti = -1, nextj = -1;
@@ -312,7 +312,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             for(int idxj=0;idxj<letters.length;idxj++){
                 if(letters[idxj].matches("(\\+|-)?[0-9]+") && (Integer.parseInt(letters[idxj]) == idx+1)){
                     orderPosMap[idx] = idxj ;
-                    System.out.println("orderPosMap["+idx+"] = "+idxj);
+                    //System.out.println("orderPosMap["+idx+"] = "+idxj);
                 }
             }
         }
@@ -427,8 +427,6 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         public View getView(int position, View convertView, ViewGroup parent)
         {
             TextView tv = (TextView) super.getView(position, convertView, parent);
-                tv.setTextColor(Color.WHITE);
-
             return tv;
         }
 

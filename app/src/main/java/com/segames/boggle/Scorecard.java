@@ -20,26 +20,38 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
         setContentView(R.layout.scorecard);
 
         int scoreVal = getIntent().getExtras().getInt("Score");
-        int oppscoreVal = getIntent().getExtras().getInt("Oppscore");
         int roundVal = getIntent().getExtras().getInt("Round");
+
+        if(getIntent().getExtras().getInt("Mode") != BBSingleMode){
+            scoreVal = CommManagerMulti.getTotalScore();
+            int oppscoreVal = CommManagerMulti.getTotalOppScore();
+            int roundsWon = CommManagerMulti.getNbRoundWon();
+            int roundsOppWon = CommManagerMulti.getNbRoundWonOpp();
+
+            TextView scorevalopp = (TextView)findViewById(R.id.oppscore);
+            TextView winner = (TextView)findViewById(R.id.winner);
+            TextView tvroundsWon = (TextView) findViewById(R.id.roundsWon);
+            TextView tvroundsOppWon = (TextView) findViewById(R.id.roundsOppWon);
+
+            scorevalopp.setText(Integer.toString(oppscoreVal));
+            tvroundsWon.setText(Integer.toString(roundsWon));
+            tvroundsOppWon.setText(Integer.toString(roundsOppWon));
+
+            findViewById(R.id.oppscoreField).setVisibility(View.VISIBLE);
+            findViewById(R.id.roundsWonLayout).setVisibility(View.VISIBLE);
+
+            int result = CommManagerMulti.winner();
+            System.out.println("Result: "+ result);
+            if(result == BBResultOppWin) winner.setText("You Lost!");
+            else if (result == BBResultSelfWin) winner.setText("You Won!");
+            else if(result == BBResultTie) winner.setText("Tied!");
+            winner.setVisibility(View.VISIBLE);
+        }
 
         TextView scoreval = (TextView)findViewById(R.id.score);
         TextView roundval = (TextView)findViewById(R.id.round);
         scoreval.setText(Integer.toString(scoreVal));
         roundval.setText(Integer.toString(roundVal));
-
-        if(getIntent().getExtras().getInt("Mode") != BBSingleMode){
-            TextView scorevalopp = (TextView)findViewById(R.id.oppscore);
-            TextView winner = (TextView)findViewById(R.id.winner);
-
-            scorevalopp.setText(Integer.toString(oppscoreVal));
-            findViewById(R.id.oppscoreField).setVisibility(View.VISIBLE);
-
-            if(oppscoreVal > scoreVal) winner.setText("You Lost!");
-            else if (oppscoreVal < scoreVal) winner.setText("You Won!");
-            else winner.setText("Tied!");
-            winner.setVisibility(View.VISIBLE);
-        }
 
         final Button button_close = (Button) findViewById(R.id.button_close);
         button_close.setOnClickListener(new View.OnClickListener(){

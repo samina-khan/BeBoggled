@@ -3,9 +3,11 @@ package com.segames.boggle;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import static android.media.MediaPlayer.*;
 
@@ -19,7 +21,6 @@ public class Splash extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splash);
-
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         mp = create(this, R.raw.electric_sweep);

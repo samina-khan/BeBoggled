@@ -204,7 +204,17 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     //if(currentRole == ClientRole) {
                         if(readMessage.length() >= BBMinGridLen){
                             CommManagerMulti.setMultiGrid(readMessage);
-                            DoublePlayer.synchroStart();
+                            try{
+                                DoublePlayer.synchroStart();
+                            }
+                            catch(NullPointerException e1){
+                                try{
+                                    DoublePlayerCut.synchroStart();
+                                }
+                                catch(NullPointerException e2){
+                                    System.out.println("SynchroStart error");
+                                }
+                            }
                             Toast.makeText(context, "Shake", Toast.LENGTH_SHORT).show();
 
                         }

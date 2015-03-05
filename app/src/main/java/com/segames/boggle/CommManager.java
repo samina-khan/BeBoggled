@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class CommManager {
     private static BBWords BBWords1;
-    private static List clientWords = new ArrayList();
+    private static ArrayList<String> clientWords = new ArrayList<String>();
 
     public static String RequestNewGrid(int level, Context context){
         BBWords1 = new BBWords(context);
@@ -28,6 +28,13 @@ public class CommManager {
 
     public static String getGridWords(){
          return BBWords1.getGridWords();
+    }
+    public static String getYourWords(){
+        String words = "";
+        for(String word: clientWords){
+            words = words + word + ":|";
+        }
+        return words;
     }
     public static void clearlist(){clientWords.clear();}
     public static String getOnGrid(String grid, String word) {return BBWords1.annotatedGrid(grid,word);}

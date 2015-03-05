@@ -58,11 +58,8 @@ public class Gameboard implements GlobalConstants{
     {
         for(Button[] g: this.buttons)
             for(Button b:g) {
-                //b.setAlpha(0.55f);
                 b.setBackground(d);
             }
-                //b.getBackground().setAlpha(127);
-        Log.v("Gameboard:","opaquing all");
     }
     boolean isvalidclick(int clickedbuttonID)
     {
@@ -102,14 +99,14 @@ public class Gameboard implements GlobalConstants{
                     if(clickedi == ti && clickedj ==tj)
                     {
                         returnval=true;
-                        Log.v("Gameboard", "valid");
+                        //Log.v("Gameboard", "valid");
                     }
                 }
             }
 
 
         }
-        Log.v("Gameboard: ", "button click is: "+returnval);
+        //Log.v("Gameboard: ", "button click is: "+returnval);
 
         return returnval;
 

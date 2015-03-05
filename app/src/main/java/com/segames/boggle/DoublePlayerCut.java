@@ -30,17 +30,18 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Vibrator;
 
 public class DoublePlayerCut extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
-    private CountDownTimer countDownTimer;
+   private static CountDownTimer countDownTimer;
 
 
     //Game state variables
     static boolean gameInProgress = false;
+    static boolean gameboardset = false;
     static int score = 0;
     static int oppscore = 0;
     static int numRounds = 1;
@@ -55,6 +56,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     TextView opp_wordlist;
     String opp_list = "";
     private String gridstr;
+    private Vibrator vibrator;
 
     Gameboard gameboard;
     GestureDetector gestureDetector;
@@ -80,9 +82,9 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
         role = getIntent().getExtras().getInt("Role");
-        System.out.println("Role: "+role);
+        //System.out.println("Role: "+role);
 
-        Log.v("Round",Integer.toString(numRounds));
+        //Log.v("Round",Integer.toString(numRounds));
         //int blevelsize = (numRounds>maxEasyRounds)?BBNormalLevelSize:BBEasyLevelSize;
         gameboard = new Gameboard(BBNormalLevelSize);
 
@@ -106,7 +108,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         scoretext.setText(Integer.toString(score));
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
-
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
     }
 
     void setTimer(Context c){
@@ -137,12 +139,12 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
             int tempscore = wordscore(selection);
             if (tempscore > 0) {
                 my_list = my_list.concat(selection+"\n");
-                Log.v("Tag", selection);
+                //Log.v("Tag", selection);
                 my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {
-                System.out.println("tempscore "+tempscore);
+                //System.out.println("tempscore "+tempscore);
                 String str="";
                 switch (tempscore){
                     case -999 :
@@ -158,6 +160,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 /*String str = (tempscore == -999 || tempscore == -888) ? "Selected!" : "Bad Word!";*/
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
+                vibrator.vibrate(50);
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.toast_layout,
                         (ViewGroup) findViewById(R.id.toast_layout_root));
@@ -187,7 +190,10 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         scoretxt.setText(Integer.toString(score));
 
     }
-
+    static void synchroStart() {
+        gameInProgress=true;
+        countDownTimer.start();
+    }
     int wordscore(String word)
     {
         int score = -1;
@@ -204,10 +210,11 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     void shakeGrid(int length){
 
         if(!gameInProgress){
+            if(role == ClientRole) CommManagerMulti.SendServer("message","ready");
             setAuxiliary();
             setGameBoard();
             startNewGame();
-            countDownTimer.start();
+            //countDownTimer.start();
         }
     }
 
@@ -284,8 +291,11 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
             public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
-                gameboard.setGameboard(gridstr);
-                countDownTimer.start();
+                if(role== ServerRole) {
+                    gameboard.setGameboard(gridstr);
+                    gameboardset=true;
+                    countDownTimer.start();
+                }
             }
             @Override
             public void onAnimationRepeat(Animation animation) {}
@@ -300,10 +310,11 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
     void setGameBoard()
     {
+        findViewById(R.id.overlay).setVisibility(View.GONE);
         startWobble();
         String str = "";
-        str = CommManagerMulti.getGridFromServer(role, BBNormalLevel,BBDoubleCutMode, this);
-        Log.v("strlen",Integer.toString(str.length()));
+        str = CommManagerMulti.getGridFromServer(numRounds, role, BBNormalLevel,BBDoubleCutMode, this);
+        //Log.v("strlen",Integer.toString(str.length()));
         gridstr=str;
         //gameboard.setGameboard(str);
     }
@@ -319,7 +330,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
             @Override
             public void onShake(int count) {
-                Toast.makeText(getApplicationContext(), "Shaken!", Toast.LENGTH_SHORT).show();
+                if(!gameInProgress) vibrator.vibrate(50);
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
@@ -447,14 +458,21 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
         @Override
         public void onTick(long millisUntilFinished) {
-            if(gameInProgress) {
-                populateOppInfo();
+
+                if(gameInProgress) {
+                    if(!gameboardset){
+                        setGameBoard();
+                        gameboard.setGameboard(gridstr);
+                        gameboardset=true;
+                    }
+                    populateOppInfo();
+                }
                 timer = (TextView) findViewById(R.id.timer);
                 if (millisUntilFinished / 1000 == 30) {
                     timer.setTextColor(Color.RED);
                 }
                 timer.setText("" + String.format("%02d", ((millisUntilFinished / 1000) / 60)) + ":" + String.format("%02d", ((millisUntilFinished / 1000) % 60)));
-            }
+
         }
     }
 }

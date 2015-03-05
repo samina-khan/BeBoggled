@@ -42,15 +42,21 @@ public class CommManagerMulti implements GlobalConstants {
     //tag argument unused: use as you see fit
     public static String SendServer(String tag, String arg){ // Role is not needed here
 
-        //int value = clientWords.contains(arg)?(-999):BBServer.wordsValue(arg);
-        //if(value > 0){clientWords.add(arg);
-        String rslt_str = BBServerDouble1.incomeWord(arg,BBPlayer_Me);
-        if(rslt_str == wordAlreadyGuessed) return "-999";
-        if(rslt_str == wordOppGuessed) return "-888";
-        if(rslt_str == wordIncorrect) return "0";
+        String returnstr = "";
+        if(tag == "word") {
+            String rslt_str = BBServerDouble1.incomeWord(arg, BBPlayer_Me);
+            if (rslt_str == wordAlreadyGuessed) return "-999";
+            if (rslt_str == wordOppGuessed) return "-888";
+            if (rslt_str == wordIncorrect) return "0";
 
-        sendMessage(arg);
-        return Integer.toString(BBWords1.wordsValue(arg));
+            sendMessage(arg);
+            returnstr = Integer.toString(BBWords1.wordsValue(arg));
+        }
+        else if(tag == "message"){
+            sendMessage(arg);
+            returnstr = "ok";
+        }
+        return returnstr;
     }
 
     public static void setChatService(BluetoothChatService bt1, Context c1) {
@@ -59,15 +65,17 @@ public class CommManagerMulti implements GlobalConstants {
     }
 
     // Empty until the shake occurs from the Server. Only used by the client
-    public static String getGridFromServer(int role, int level, int mode, Context context) {
+    public static String getGridFromServer(int round, int role, int level, int mode, Context context) {
 
         BBWords1 = new BBWords(context);
-        BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);
+        if(round == 1){BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);}
+        else{BBServerDouble1.newRound();}
 
         // TODO - this should probably use a synchronous function to update multi_grid_str
         String str = "";
         if(role == ServerRole) {
             str = BBWords1.Grid(level);
+            System.out.println("Sent to client:"+str);
             sendMessage(str);
             return str;
         } else {
@@ -111,6 +119,15 @@ public class CommManagerMulti implements GlobalConstants {
         }
         return str;
     }
+    public static String getYourWordsList(){
+        ArrayList<String> gridWords = BBServerDouble1.getGuessedWordsP1List();
+
+        String str = "";
+        for(String word: gridWords){
+            str += word + "|";
+        }
+        return str;
+    }
 
     private static void sendMessage(String message) {
         // Check that we're actually connected before trying anything
@@ -131,7 +148,7 @@ public class CommManagerMulti implements GlobalConstants {
         clientWords.clear(); clientWords2.clear();
     }
     public static String getOnGrid(String grid, String word) {
-        System.out.println("grid: "+grid+" word: "+word+" result: "+BBWords1.annotatedGrid(grid,word));
+        //System.out.println("grid: "+grid+" word: "+word+" result: "+BBWords1.annotatedGrid(grid,word));
         word = word.toLowerCase();
         return BBWords1.annotatedGrid(grid,word);
     }
@@ -139,5 +156,13 @@ public class CommManagerMulti implements GlobalConstants {
     public static int getOppScore(){
         return BBServerDouble1.getGameScoreP2();
     }
+
+    public static int winnerRound(){ return BBServerDouble1.winnerRound();}
+
+    public static int getTotalScore(){return BBServerDouble1.getTotalScoreP1();}
+    public static int getTotalOppScore(){return BBServerDouble1.getTotalScoreP2();}
+    public static int winner(){return BBServerDouble1.winner();}
+    public static int getNbRoundWon(){return BBServerDouble1.getNbRoundWonP1();}
+    public static int getNbRoundWonOpp(){return BBServerDouble1.getNbRoundWonP2();}
 
 }

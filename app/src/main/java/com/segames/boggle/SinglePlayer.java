@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 //import android.widget.TableRow;
 
@@ -43,7 +44,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     static int game_boardSize=4;
     //Adding test comment
     //Counter variables
-    private final long startTime = 20 * 1000;
+    private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
 
@@ -67,6 +68,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     private ShakeEventManager mShakeDetector;
     private String gridstr;
     Animation rotation;
+    private Vibrator vibrator;
 
 
     /**********************Body of code ************************/
@@ -80,7 +82,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         //Initialize game
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
-        Log.v("Round",Integer.toString(numRounds));
+        //Log.v("Round",Integer.toString(numRounds));
         int blevelsize;
         if(numRounds<=BBMaxEasyRounds) {
             blevelsize = BBEasyLevelSize;
@@ -110,7 +112,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
 
-
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
     }
 
@@ -156,13 +158,14 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
             int tempscore = wordscore(selection);
             if (tempscore > 0) {
                 my_list = my_list.concat("\n" + selection);
-                Log.v("Tag", selection);
+                //Log.v("Tag", selection);
                 my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {
                 //System.out.println("score: "+tempscore);
                 String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
+                vibrator.vibrate(50);
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 LayoutInflater inflater = getLayoutInflater();
@@ -217,7 +220,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onShake(int count) {
-                Toast.makeText(getApplicationContext(), "Shaken!", Toast.LENGTH_SHORT).show();
+                if(!gameInProgress) vibrator.vibrate(50);
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
@@ -328,7 +331,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         int gamelevel = (numRounds>BBMaxEasyRounds)?BBNormalLevel:BBEasyLevel;
         String str = CommManager.RequestNewGrid(gamelevel, this);
         gridstr=str;
-        Log.v("strlen",Integer.toString(str.length()));
+        //Log.v("strlen",Integer.toString(str.length()));
     }
 
     //All button stuff: click, double tap, pressing back

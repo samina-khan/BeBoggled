@@ -18,6 +18,8 @@ public class BBServerDouble implements GlobalConstants{
 
     private int gameScoreP1;
     private int gameScoreP2;
+    private int totalGameScoreP1;
+    private int totalGameScoreP2;
     private int nbRoundWonP1;
     private int nbRoundWonP2;
 
@@ -44,6 +46,8 @@ public class BBServerDouble implements GlobalConstants{
         this.gameRound = 1;
         this.gameScoreP1 = 0;
         this.gameScoreP2 = 0;
+        //this.totalGameScoreP1 = 0;
+        //this.totalGameScoreP2 = 0;
         this.nbRoundWonP1 = 0;
         this.nbRoundWonP2 = 0;
         this.BBWords = bbWords;
@@ -69,6 +73,14 @@ public class BBServerDouble implements GlobalConstants{
 
     public int getGameScoreP2() {
         return gameScoreP2;
+    }
+
+    public int getTotalScoreP1() {
+        return totalGameScoreP1;
+    }
+
+    public int getTotalScoreP2() {
+        return totalGameScoreP2;
     }
 
     public int getNbRoundWonP1() {
@@ -128,8 +140,10 @@ public class BBServerDouble implements GlobalConstants{
     public void updateGameScore(int wordValue, int playerId) {
         if(playerId == 1){
             this.gameScoreP1 = this.gameScoreP1 + wordValue;
+            this.totalGameScoreP1 = this.totalGameScoreP1 + wordValue;
         }else if(playerId == 2){
             this.gameScoreP2 = this.gameScoreP2 + wordValue;
+            this.totalGameScoreP2 = this.totalGameScoreP2 + wordValue;
         }
     }
 

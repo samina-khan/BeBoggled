@@ -14,15 +14,6 @@
         android:orientation="vertical"
 
         >
-        <!--
-           <TextView
-               android:id = "@+id/CongoText"
-               style = "@style/ScoreText"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Great!"
-               android:visibility="gone"
-               /> -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -98,16 +89,51 @@
                         android:layout_weight="1"
                         android:layout_marginRight="15dp" />
                 </LinearLayout>
-
-                <!-- Opponent Score -->
                 <LinearLayout
+                    android:id="@+id/roundsWonLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2"
                     android:layout_marginTop="8dp"
-                    android:id="@+id/oppscoreField"
                     android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Rounds Won :"
+                        android:id="@+id/roundsWonText"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/roundsWon"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp" />
+                </LinearLayout>
+
+                <!-- Opponent Score -->
+                <LinearLayout
+                    android:id="@+id/oppscoreField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -131,6 +157,37 @@
                         android:layout_weight="1"
                         android:layout_marginRight="15dp" />
                 </LinearLayout>
+                    <!--Opponent Rounds Information -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Number of Rounds won by opponent :"
+                        android:id="@+id/opproundsText"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="italic" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/roundsOppWon"
+                        android:textColor="#ffffffff"
+                        android:layout_marginTop="15dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:layout_marginRight="15dp" />
+                </LinearLayout>
+                </LinearLayout>
 
                 <!-- Winner display -->
                 <TextView
@@ -153,7 +210,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal">
 

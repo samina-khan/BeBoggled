@@ -25,7 +25,7 @@ public interface GlobalConstants {
     public static final int BBWordsSuccess = 0;
     public static final int BBWordsFailure = -1;
 
-    public static final int BBGameTime = 40;
+    public static final int BBGameTime = 10;
 
     public static final String BBValidWordsFile = "bbwords.txt";
 
@@ -45,14 +45,17 @@ public interface GlobalConstants {
     public static final String wordAlreadyGuessed = "Word already guessed";
     public static final String wordIncorrect = "Incorrect";
     public static final String wordOppGuessed = "Opponent Guessed";
-
+    public static final int BBResultTie = 0;
+    public static final int BBResultSelfWin = 1;
+    public static final int BBResultOppWin = 2;
 
 
     /*
      * BBClient display constants
      */
 
-    public static final int BBMaxEasyRounds = 3;
+    public static final int BBMaxEasyRounds = 1;
+    public static final int BBMaxTotalRounds = 5;
     public static final int BBMinWordLength = 3;
 
     public static final int BBSingleMode = 1;

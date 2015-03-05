@@ -20,13 +20,17 @@
         android:text="Great!"
         android:visibility="gone"
         /> -->
-    <TextView
+    <!--<TextView
         android:id = "@+id/RoundVal"
         style = "@style/ScoreValueText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Round: 10"
-        android:visibility="gone"/>
+        android:visibility="visible"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:id = "@+id/Winner"
         style = "@style/ScoreValueText"
@@ -34,6 +38,23 @@
         android:layout_height="wrap_content"
         android:text="You Won!"
         android:visibility="gone"/>
+        <View
+            android:id = "@+id/Spacer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            />
+
+    <TextView
+        android:id = "@+id/RoundVal"
+        style = "@style/ScoreValueText"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Round: 10"
+        android:visibility="visible"/>
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,10 +136,10 @@
                         />
                     <TableLayout
                         android:id="@+id/bigtable"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingBottom="15dp"
-                        android:paddingRight="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingLeft="6dp"
+                        android:paddingBottom="20dp"
+                        android:paddingRight="18dp"
                         android:background="@drawable/roundedblack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,28 +147,28 @@
                         android:visibility="visible"
                         >
                         <TableRow android:layout_width="wrap_content">
-                            <Button android:id="@+id/bigbtns1" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns2" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns3" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns4" style="@style/BtnThemeScore2"></Button>
+                            <Button android:id="@+id/bigbtns1" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns2" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns3" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns4" style="@style/BtnThemeScore3"></Button>
                         </TableRow>
                         <TableRow android:layout_width="wrap_content">
-                            <Button android:id="@+id/bigbtns5" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns6" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns7" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns8" style="@style/BtnThemeScore2"></Button>
+                            <Button android:id="@+id/bigbtns5" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns6" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns7" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns8" style="@style/BtnThemeScore3"></Button>
                         </TableRow>
                         <TableRow android:layout_width="wrap_content">
-                            <Button android:id="@+id/bigbtns9" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns10" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns11" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns12" style="@style/BtnThemeScore2"></Button>
+                            <Button android:id="@+id/bigbtns9" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns10" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns11" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns12" style="@style/BtnThemeScore3"></Button>
                         </TableRow>
                         <TableRow android:layout_width="wrap_content">
-                            <Button android:id="@+id/bigbtns13" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns14" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns15" style="@style/BtnThemeScore2"></Button>
-                            <Button android:id="@+id/bigbtns16" style="@style/BtnThemeScore2"></Button>
+                            <Button android:id="@+id/bigbtns13" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns14" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns15" style="@style/BtnThemeScore3"></Button>
+                            <Button android:id="@+id/bigbtns16" style="@style/BtnThemeScore3"></Button>
                         </TableRow>
                     </TableLayout>
                     <TableLayout
@@ -157,8 +178,8 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="5dp"
                         android:paddingLeft="5dp"
-                        android:paddingBottom="12dp"
-                        android:paddingRight="10dp"
+                        android:paddingBottom="18dp"
+                        android:paddingRight="15dp"
                         android:background="@drawable/roundedblack"
                         android:visibility="gone"
                         >
@@ -190,10 +211,9 @@
             android:id="@+id/flipper">
 
             <LinearLayout
-                android:id="@+id/layout_front"
+                android:id="@+id/layout_all"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-
+                android:layout_height="130dp"
                 android:visibility="visible"
                 android:orientation="vertical">
                 <LinearLayout
@@ -203,6 +223,7 @@
                     <TextView
                         android:paddingTop="10dp"
                         android:paddingLeft="5dp"
+                        android:paddingBottom="10dp"
                         android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -214,27 +235,31 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         />
-                    <ImageView
+                    <!--<ImageView
                         android:id="@+id/greenarrows"
                         android:layout_marginTop="5dp"
                         android:layout_width="30dp"
                         android:layout_height="20dp"
                         android:src="@drawable/greenarrows_back"
                         android:layout_gravity="right"
-                        android:clickable="true"/>
+                        android:clickable="true"/>-->
                 </LinearLayout>
                 <ListView
                     android:id="@+id/allwordslist"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:dividerHeight="0dp" >
+                    android:layout_height="100dp"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
+                    >
 
                 </ListView>
             </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/layout_back"
+                    android:id="@+id/layout_opp"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="130dp"
                     android:visibility="gone"
                     android:orientation="vertical">
                     <LinearLayout
@@ -248,13 +273,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white"
-                            android:text="Opponent's words:"
+                            android:text="Your words:"
                             />
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             />
+                        <!--
                         <ImageView
                             android:id="@+id/greenarrows2"
                             android:layout_marginTop="5dp"
@@ -262,18 +288,156 @@
                             android:layout_height="20dp"
                             android:src="@drawable/greenarrows"
                             android:layout_gravity="right"
-                            android:clickable="true"/>
+                            android:clickable="true"/>-->
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/opplist"
+                        android:id="@+id/yourlist"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp"
+                        android:layout_height="100dp"
                         android:dividerHeight="0dp"
                         >
                     </ListView>
                 </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_your"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:paddingTop="10dp"
+                        android:paddingLeft="5dp"
+                        android:textSize="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Opponent's words:"
+                        />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        />
+                   <!-- <ImageView
+                        android:id="@+id/greenarrows2"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/greenarrows"
+                        android:layout_gravity="right"
+                        android:clickable="true"/>-->
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/opplist"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:dividerHeight="0dp"
+                    >
+                </ListView>
+            </LinearLayout>
        </ViewFlipper>
+            <!-- View that displays Possible Words list -->
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/flipperSingle"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/layout_allSingle"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:visibility="visible"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:paddingTop="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="10dp"
+                            android:textSize="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:text="Possible words:"
+                            />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <!--<ImageView
+                            android:id="@+id/greenarrows"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/greenarrows_back"
+                            android:layout_gravity="right"
+                            android:clickable="true"/>-->
+                    </LinearLayout>
+                    <ListView
+                        android:id="@+id/allwordslistSingle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        >
+
+                    </ListView>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_yourSingle"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:paddingTop="10dp"
+                            android:paddingLeft="5dp"
+                            android:textSize="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:text="Your words:"
+                            />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <!--
+                        <ImageView
+                            android:id="@+id/greenarrows2"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/greenarrows"
+                            android:layout_gravity="right"
+                            android:clickable="true"/>-->
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/yourlistSingle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:dividerHeight="0dp"
+                        >
+                    </ListView>
+                </LinearLayout>
+            </ViewFlipper>
 
             <!-- Buttons: Next Round, End Game -->
             <LinearLayout

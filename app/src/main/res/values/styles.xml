@@ -13,11 +13,19 @@
     </style>
 
     <style name="BtnThemeScore2">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
         <item name="android:background">@drawable/whitedie</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:clickable">false</item>
+    </style>
+    <style name="BtnThemeScore3">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/whitedie</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">25dp</item>
         <item name="android:clickable">false</item>
     </style>
 

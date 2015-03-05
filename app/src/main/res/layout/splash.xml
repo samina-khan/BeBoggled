@@ -5,5 +5,46 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Splash">
+    <!--
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/Be"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:text="Be"
+        android:textColor="@android:color/white"
+        android:textSize="60dp"
+        android:layout_marginLeft="70dp"
+        />
+    <TextView
+        android:id="@+id/Boggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="-20dp"
+        android:paddingLeft="-2dp"
+        android:text="Boggle"
+        android:textColor="@android:color/white"
+        android:textSize="60dp"
+        />
+    <TextView
+        android:id="@+id/d"
+        android:layout_marginTop="-20dp"
+        android:paddingLeft="-2dp"
+        android:layout_marginLeft="290dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+        android:text="d!"
+        android:textColor="@android:color/white"
+        android:textSize="60dp"
+        />
+    </LinearLayout>-->
 
 </RelativeLayout>
