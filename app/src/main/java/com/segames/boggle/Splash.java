@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import static android.media.MediaPlayer.*;
@@ -14,13 +16,14 @@ import static android.media.MediaPlayer.*;
 public class Splash extends Activity {
     MediaPlayer mp;
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 5000;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splash);
+
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         mp = create(this, R.raw.electric_sweep);

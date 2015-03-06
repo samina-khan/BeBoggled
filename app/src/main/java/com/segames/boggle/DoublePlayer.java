@@ -3,6 +3,8 @@ package com.segames.boggle;
 
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -71,6 +73,11 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     Drawable[] arrows = new Drawable[9];
     Animation rotation;
 
+    //Animation red
+    public boolean mContentLoaded;
+    private View mContentView;
+    private View mLoadingView;
+    private int mShortAnimationDuration;
     static void synchroStart() {
         gameInProgress=true;
         countDownTimer.start();
@@ -152,9 +159,23 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             } else {
                 String str = (tempscore == -999 ) ? "Selected!" : "Bad Word!";
                 vibrator.vibrate(50);
-                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
-                mp.start();
-                LayoutInflater inflater = getLayoutInflater();
+                //Animation red
+                mContentLoaded = !mContentLoaded;
+                showContentOrLoadingIndicator(mContentLoaded);
+                //Sound effect
+                if(str.equals("Bad Word!")){
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.badsound);
+                    mp.start();
+                }
+                if(str.equals("Selected!")){
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.selected);
+                    mp.start();
+                }
+
+                //MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                //mp.start();
+
+                /*LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.toast_layout,
                         (ViewGroup) findViewById(R.id.toast_layout_root));
 
@@ -165,18 +186,54 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 //toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.setView(layout);
-                toast.show();
-                /*
+                toast.show();*/
+                //Toast
                 Toast toast = Toast.makeText(getApplicationContext(), str,
                         Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP | Gravity.LEFT, 400, 400);
-                toast.show();*/
+                toast.setGravity(Gravity.BOTTOM ,0,15);
+                toast.show();
             }
             gameboard.clearpreviousclick();
             selection = "";
         }
 
     }
+
+    private void showContentOrLoadingIndicator(boolean contentLoaded) {
+        // Decide which view to hide and which to show.
+        final View showView = contentLoaded ? mContentView : mLoadingView;
+        final View hideView = contentLoaded ? mLoadingView : mContentView;
+
+        // Set the "show" view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        showView.setAlpha(0f);
+
+        showView.setVisibility(View.VISIBLE);
+
+        // Animate the "show" view to 100% opacity, and clear any animation listener set on
+        // the view. Remember that listeners are not limited to the specific animation
+        // describes in the chained method calls. Listeners are set on the
+        // ViewPropertyAnimator object for the view, which persists across several
+        // animations.
+        showView.animate()
+                .alpha(1f)
+                .setDuration(mShortAnimationDuration)
+                .setListener(null);
+
+        // Animate the "hide" view to 0% opacity. After the animation ends, set its visibility
+        // to GONE as an optimization step (it won't participate in layout passes, etc.)
+        hideView.animate()
+                .alpha(0f)
+                .setDuration(mShortAnimationDuration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        hideView.setVisibility(View.GONE);
+                    }
+                });
+        mContentLoaded=!contentLoaded;
+    }
+
 
     void setScore(int score)
     {

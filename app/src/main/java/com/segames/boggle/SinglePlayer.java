@@ -2,11 +2,16 @@ package com.segames.boggle;
 
 
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -17,6 +22,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,15 +76,26 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     private String gridstr;
     Animation rotation;
     private Vibrator vibrator;
+    //Animation red
+    public boolean mContentLoaded;
+    private View mContentView;
+    private View mLoadingView;
+    private int mShortAnimationDuration;
 
 
     /**********************Body of code ************************/
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_player);
+       //Code for Animation red
+        mContentView = findViewById(R.id.single_player);
+        mLoadingView = findViewById(R.id.red_layout);
+        mLoadingView.setVisibility(View.GONE);
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         //Initialize game
         numRounds = getIntent().getExtras().getInt("Round");
@@ -95,7 +113,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         gameboard = new Gameboard(blevelsize);
         //set up shake button
         button_submit = (Button) findViewById(R.id.button_submit);
-        button_submit.setOnClickListener(this);
+       button_submit.setOnClickListener(this);
 
 
         //Set up
@@ -166,6 +184,27 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 //System.out.println("score: "+tempscore);
                 String str = (tempscore == -999) ? "Selected!" : "Bad Word!";
                 vibrator.vibrate(50);
+                //Animation red
+                mContentLoaded = !mContentLoaded;
+                showContentOrLoadingIndicator(mContentLoaded);
+                //Sound effect
+                if(str.equals("Bad Word!")){
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.badsound);
+                    mp.start();
+                }
+                if(str.equals("Selected!")){
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.selected);
+                    mp.start();
+                }
+                //Toast
+                Toast toast = Toast.makeText(getApplicationContext(), str,
+                        Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM ,0,15);
+                toast.show();
+                //
+
+                /*LayoutInflater inflater = getLayoutInflater();
+                vibrator.vibrate(50);
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 LayoutInflater inflater = getLayoutInflater();
@@ -176,15 +215,50 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 text.setText(str);
 
                 Toast toast = new Toast(getApplicationContext());
-                //toast.setGravity(Gravity.CENTER_VERTICAL, 0, 200);
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
-                toast.show();
+                toast.show();*/
             }
             gameboard.clearpreviousclick();
             selection = "";
         }
 
+    }
+
+    private void showContentOrLoadingIndicator(boolean contentLoaded) {
+        // Decide which view to hide and which to show.
+        final View showView = contentLoaded ? mContentView : mLoadingView;
+        final View hideView = contentLoaded ? mLoadingView : mContentView;
+
+        // Set the "show" view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        showView.setAlpha(0f);
+
+        showView.setVisibility(View.VISIBLE);
+
+        // Animate the "show" view to 100% opacity, and clear any animation listener set on
+        // the view. Remember that listeners are not limited to the specific animation
+        // describes in the chained method calls. Listeners are set on the
+        // ViewPropertyAnimator object for the view, which persists across several
+        // animations.
+        showView.animate()
+                .alpha(1f)
+                .setDuration(mShortAnimationDuration)
+                .setListener(null);
+
+        // Animate the "hide" view to 0% opacity. After the animation ends, set its visibility
+        // to GONE as an optimization step (it won't participate in layout passes, etc.)
+        hideView.animate()
+                .alpha(0f)
+                .setDuration(mShortAnimationDuration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        hideView.setVisibility(View.GONE);
+                    }
+                });
+        mContentLoaded=!contentLoaded;
     }
 
     void setScore(int score)

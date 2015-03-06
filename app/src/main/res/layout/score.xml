@@ -454,9 +454,9 @@
                     android:layout_gravity="bottom"
                     android:text="Next Round"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/black"
+                    android:textColor="#ffffffff"
                     android:textSize="17dp"
-                    android:background="@drawable/greenbutton"/>
+                    android:background="@drawable/buttonstyle"/>
                 <Button
                     android:layout_marginLeft="10dp"
                     android:layout_width="120dp"
@@ -465,9 +465,9 @@
                     android:id="@+id/button_main"
                     android:text="End Game"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/black"
+                    android:textColor="#ffffffff"
                     android:textSize="17dp"
-                    android:background="@drawable/greenbutton"/>
+                    android:background="@drawable/buttonstyle"/>
             </LinearLayout>
             </LinearLayout>
 
