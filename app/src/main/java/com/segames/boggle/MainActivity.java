@@ -3,10 +3,14 @@ package com.segames.boggle;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
@@ -25,13 +29,27 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // and listen for it here
         button_single = (Button) findViewById(R.id.button_single);
         button_single.setOnClickListener(this);
+        moveViewToScreenCenter(button_single);
 
         button_double = (Button) findViewById(R.id.button_double);
         button_double.setOnClickListener(this);
+        moveViewToScreenCenter(button_double);
 
         button_doubleCT = (Button) findViewById(R.id.button_doubleCT);
         button_doubleCT.setOnClickListener(this);
+        moveViewToScreenCenter(button_doubleCT);
     }
+
+    private void moveViewToScreenCenter( View view )
+    {
+        TranslateAnimation anim = new TranslateAnimation( 900, 0 , 0, 0 );
+        anim.setDuration(1700);
+        anim.setFillAfter( true );
+        view.startAnimation(anim);
+    }
+
+
+
 
     @Override
     public void onClick(View v) {
