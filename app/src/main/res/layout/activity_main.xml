@@ -5,7 +5,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/rootLayout">
     <!--android:background="@android:color/black"-->
 
 
@@ -25,41 +26,63 @@
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
             android:id="@+id/button_single"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="90dp"
-            android:background="@android:color/transparent"
+            android:layout_width="85pt"
+            android:layout_height="25pt"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="110dp"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:background="@drawable/introbuttons"
             android:text="@string/single_mode"
+            android:textStyle="normal"
             android:textAllCaps="false"
             android:textColor="#ffffffff"
-            android:textSize="@dimen/button_text_size"/>
+            android:textSize="@dimen/button_text_size"
+            android:typeface="serif"
+
+
+
+        />
+        <!--android:drawableLeft="@drawable/introButtons"-->
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
             android:id="@+id/button_double"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
+            android:layout_width="85pt"
+            android:layout_height="25pt"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:background="@drawable/introbuttons"
             android:text="@string/double_mode"
+            android:textStyle="normal"
             android:textAllCaps="false"
             android:textColor="#ffffffff"
             android:textSize="@dimen/button_text_size"
-            android:typeface="sans"/>
+            android:typeface="serif"
+           />
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
             android:id="@+id/button_doubleCT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="180dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
+            android:layout_width="90pt"
+            android:layout_height="25pt"
+            android:layout_marginLeft="142dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:background="@drawable/introbuttons"
             android:text="@string/double_modeCT"
+            android:textStyle="normal"
             android:textAllCaps="false"
             android:textColor="#ffffffff"
             android:textSize="@dimen/button_text_size"
-            android:typeface="sans"/>
+            android:typeface="serif"/>
 
     </LinearLayout>
 
