@@ -1,6 +1,7 @@
 package com.segames.boggle;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -18,6 +19,8 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scorecard);
+        MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
+        mp.start();
 
         int scoreVal = getIntent().getExtras().getInt("Score");
         int roundVal = getIntent().getExtras().getInt("Round");
