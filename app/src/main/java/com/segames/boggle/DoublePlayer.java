@@ -89,6 +89,11 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.double_playeralt);
 
+        //Code for Animation red
+        mContentView = findViewById(R.id.double_player);
+        mLoadingView = findViewById(R.id.red_layout);
+        mLoadingView.setVisibility(View.GONE);
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         /* Getting arguments from previous screen */
         numRounds = getIntent().getExtras().getInt("Round");
