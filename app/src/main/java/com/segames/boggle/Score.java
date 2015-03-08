@@ -139,9 +139,12 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
             }
         });
         */
-
+/*
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
+*/
+        arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft2), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright2),
+                getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft2), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright2)};
 
 
     }
@@ -315,13 +318,17 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         }
         //Second pass through the grid: setting arrows sequentially (with info from orderPosMap
         for(int idx = 0; idx<orderPosMap.length;idx++){
-            //gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setText(Integer.toString(idx+1));
             previousi = nexti;
             previousj = nextj;
             nexti = orderPosMap[idx] / size;
             nextj = orderPosMap[idx] % size;
+
             setArrows(previousi, previousj, nexti, nextj);
-            gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setBackground(getResources().getDrawable(R.drawable.yellowdie));
+            if(idx == 0){
+                gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setText(gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].getText()+"*");
+            }
+            else{
+            gridbtns[orderPosMap[idx] / size][orderPosMap[idx] % size].setBackground(getResources().getDrawable(R.drawable.yellowdie));}
         }
 
     }
@@ -347,6 +354,7 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
                 gridbtns[nexti][nextj].setBackground(getResources().getDrawable(R.drawable.yellowdie));
             }
             else{
+
                 gridbtns[previousi][previousj].setBackground(arrows[arrowindex]);
             }
         }

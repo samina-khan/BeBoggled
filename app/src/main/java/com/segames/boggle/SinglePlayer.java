@@ -127,8 +127,8 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         roundtext.setText(Integer.toString(numRounds));
         TextView scoretext = (TextView) findViewById(R.id.score);
         scoretext.setText(Integer.toString(score));
-        arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
-                getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
+        arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft2), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright2),
+                getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft2), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright2)};
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
@@ -201,24 +201,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM ,0,15);
                 toast.show();
-                //
 
-                /*LayoutInflater inflater = getLayoutInflater();
-                vibrator.vibrate(50);
-                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
-                mp.start();
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.toast_layout,
-                        (ViewGroup) findViewById(R.id.toast_layout_root));
-
-                TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText(str);
-
-                Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.setView(layout);
-                toast.show();*/
             }
             gameboard.clearpreviousclick();
             selection = "";
@@ -407,7 +390,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
         gridstr=str;
         //Log.v("strlen",Integer.toString(str.length()));
     }
-
+    boolean ignore = false;
     //All button stuff: click, double tap, pressing back
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -421,6 +404,16 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
                 findViewById(R.id.overlay).setVisibility(View.GONE);
                 break;
             default:
+/*
+                if(current_button==gameboard.getpreviousclick()){
+                    if(ignore == false){
+                        current_button.setBackground(getResources().getDrawable(R.drawable.whitedie));
+                        ignore = true;
+                    }
+                    else if(ignore == true){
+                        ignore = false;
+                    }
+                }*/
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
                     //current_button.setAlpha(0.55f);
                     int arrow_index = gameboard.getArrow(current_button.getId());

@@ -115,6 +115,10 @@ public class Gameboard implements GlobalConstants{
     {
         this.previous_click=null;
     }
+
+    Button getpreviousclick(){
+        return previous_click;
+    }
     void previousclick(int buttonID){
 
         for(Button[] array: this.buttons)
