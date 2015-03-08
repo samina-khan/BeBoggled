@@ -203,24 +203,32 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     // Check for the incoming gridStr from Server
                     //if(currentRole == ClientRole) {
                         if(readMessage.length() >= BBMinGridLen){
-                            CommManagerMulti.setMultiGrid(readMessage);
+                            Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
                             try{
+
+                                CommManagerMulti.setMultiGrid(readMessage);
                                 DoublePlayer.synchroStart();
                             }
                             catch(NullPointerException e1){
                                 try{
+                                    //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
+                                    CommManagerMulti.setMultiGrid(readMessage);
                                     DoublePlayerCut.synchroStart();
                                 }
                                 catch(NullPointerException e2){
                                     System.out.println("SynchroStart error");
                                 }
                             }
-                            Toast.makeText(context, "Shake", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
 
                         }
 
-                        else
-                            CommManagerMulti.writeOppWord(readMessage);
+                        else {
+                            if(readMessage.equals("BBReady")){
+                            Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();}
+                            else{
+                            CommManagerMulti.writeOppWord(readMessage);}
+                        }
                     //} else { // This is opponent's guessed word
                      //   CommManagerMulti.writeOppWord(readMessage);
                     //}

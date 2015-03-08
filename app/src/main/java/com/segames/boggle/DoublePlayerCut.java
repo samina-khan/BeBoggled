@@ -270,10 +270,11 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     void shakeGrid(int length){
 
         if(!gameInProgress){
-            if(role == ClientRole) CommManagerMulti.SendServer("message","ready");
+            if(role == ClientRole) CommManagerMulti.SendServer("message","BBReady");
+            else{
             setAuxiliary();
             setGameBoard();
-            startNewGame();
+            startNewGame();}
             //countDownTimer.start();
         }
     }
@@ -510,6 +511,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 scoreIntent.putExtra("Grid", gridstr);
                 scoreIntent.putExtra("Role", role);
                 gameInProgress = false;
+                gameboardset = false;
 
                 startActivity(scoreIntent);
             }

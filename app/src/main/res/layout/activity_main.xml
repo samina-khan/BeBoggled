@@ -45,7 +45,7 @@
 
 
         />
-        <!--android:drawableLeft="@drawable/introButtons"-->
+        <!--android:drawableLeft="@drawable/introbuttons"-->
         <!-- Set OnClickListener to trigger results when pressed -->
         <Button
             android:id="@+id/button_double"

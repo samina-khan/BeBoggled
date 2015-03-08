@@ -270,9 +270,6 @@ public class Score extends ActionBarActivity implements View.OnClickListener,Glo
         }
 
         final CustomListAdapter adapter = new CustomListAdapter(this, R.layout.listitem,words);
-
-        allwordslist.setDivider(null);
-        allwordslist.setDividerHeight(0);
         allwordslist.setAdapter(adapter);
         allwordslist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         allwordslist.setOnItemClickListener(new ListView.OnItemClickListener() {

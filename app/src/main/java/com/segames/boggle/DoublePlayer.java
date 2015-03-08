@@ -263,11 +263,11 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void shakeGrid(int length){
 
         if(!gameInProgress){
-           if(role == ClientRole) commManagerMulti1.SendServer("message","ready");
+           if(role == ClientRole) commManagerMulti1.SendServer("message","BBReady");
+            else{
            setAuxiliary();
            setGameBoard();
-           startNewGame();
-            //countDownTimer.start();
+           startNewGame();}
         }
     }
 
@@ -502,6 +502,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 scoreIntent.putExtra("Grid", gridstr);
                 scoreIntent.putExtra("Role", role);
                 gameInProgress = false;
+                gameboardset = false;
                 startActivity(scoreIntent);
             }
         }

@@ -68,7 +68,9 @@ public class CommManagerMulti implements GlobalConstants {
     public static String getGridFromServer(int round, int role, int level, int mode, Context context) {
 
         BBWords1 = new BBWords(context);
-        if(round == 1){BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);}
+        BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);
+
+        if(round == 1){}
         else{BBServerDouble1.newRound();}
 
         // TODO - this should probably use a synchronous function to update multi_grid_str
