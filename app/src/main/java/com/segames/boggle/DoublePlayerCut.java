@@ -25,20 +25,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Vibrator;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class DoublePlayerCut extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
-   private static CountDownTimer countDownTimer;
+    private static CountDownTimer countDownTimer;
 
 
     //Game state variables
@@ -71,12 +75,29 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
     Drawable[] arrows = new Drawable[9];
     Animation rotation;
+
     //Animation red
     public boolean mContentLoaded;
     private View mContentView;
     private View mLoadingView;
     private int mShortAnimationDuration;
 
+    public static void timerStart(int interval) {
+        // int interval = 10000; // 10 sec
+        long time = System.currentTimeMillis() + interval;
+        Date timeToRun = new Date(time);
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+                synchroStart();
+            }
+        }, timeToRun);
+    }
+    static void synchroStart() {
+        gameInProgress=true;
+        countDownTimer.start();
+    }
 
     /* OnCreate - All the start-up stuff here */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -84,11 +105,15 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.double_playeralt);
+
         //Code for Animation red
         mContentView = findViewById(R.id.double_player);
         mLoadingView = findViewById(R.id.red_layout);
         mLoadingView.setVisibility(View.GONE);
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        CommManagerMulti.setClientReadyStatus(false);
+        CommManagerMulti.setServerWaitingStatus(false);
 
         /* Getting arguments from previous screen */
         numRounds = getIntent().getExtras().getInt("Round");
@@ -97,7 +122,6 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         //System.out.println("Role: "+role);
 
         //Log.v("Round",Integer.toString(numRounds));
-        //int blevelsize = (numRounds>maxEasyRounds)?BBNormalLevelSize:BBEasyLevelSize;
         gameboard = new Gameboard(BBNormalLevelSize);
 
 
@@ -128,6 +152,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
+
     }
 
     void setTimer(Context c){
@@ -156,7 +181,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         if(selection.length() >= BBMinWordLength) {
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
-            if (tempscore > 0) {
+            if (tempscore == -888 || tempscore > 0) {
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
                 mp.start();
                 my_list = my_list.concat(selection+"\n");
@@ -257,16 +282,14 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         mContentLoaded=!contentLoaded;
     }
 
+
     void setScore(int score)
     {
         TextView scoretxt = (TextView) findViewById(R.id.score);
         scoretxt.setText(Integer.toString(score));
 
     }
-    static void synchroStart() {
-        gameInProgress=true;
-        countDownTimer.start();
-    }
+
     int wordscore(String word)
     {
         int score = -1;
@@ -283,12 +306,24 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     void shakeGrid(int length){
 
         if(!gameInProgress){
-            if(role == ClientRole) CommManagerMulti.SendServer("message","BBReady");
-            else{
-            setAuxiliary();
-            setGameBoard();
-            startNewGame();}
-            //countDownTimer.start();
+            if(role == ClientRole) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Server",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                CommManagerMulti.SendServer("message", "BBReady");
+            } else {
+                if(CommManagerMulti.isClientReady()) {
+                   findViewById(R.id.overlaywait).setVisibility(View.GONE);
+                   setAuxiliary();
+                   setGameBoard();
+                   startNewGame();
+               } else {
+                   Toast toast = Toast.makeText(getApplicationContext(), "Opponent is not Ready",
+                           Toast.LENGTH_SHORT);
+                   toast.show();
+                   CommManagerMulti.setServerWaitingStatus(true);
+               }
+           }
         }
     }
 
@@ -363,14 +398,16 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         rotation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
+
             @Override
             public void onAnimationEnd(Animation animation) {
-                if(role== ServerRole) {
+                if (role == ServerRole) {
                     gameboard.setGameboard(gridstr);
-                    gameboardset=true;
+                    gameboardset = true;
                     countDownTimer.start();
                 }
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
@@ -384,6 +421,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
     void setGameBoard()
     {
+        button_submit.setVisibility(View.GONE);
         findViewById(R.id.overlay).setVisibility(View.GONE);
         startWobble();
         String str = "";
@@ -490,7 +528,6 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-
     void populateOppInfo(){
         oppscore = CommManagerMulti.getOppScore();
         TextView score_opp = (TextView) findViewById(R.id.score_opp);
@@ -525,7 +562,6 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 scoreIntent.putExtra("Role", role);
                 gameInProgress = false;
                 gameboardset = false;
-
                 startActivity(scoreIntent);
             }
         }
