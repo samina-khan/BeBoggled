@@ -1,6 +1,9 @@
 package com.segames.boggle;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -19,8 +23,7 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scorecard);
-        MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
-        mp.start();
+
 
         int scoreVal = getIntent().getExtras().getInt("Score");
         int roundVal = getIntent().getExtras().getInt("Round");
@@ -45,12 +48,28 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
 
             int result = CommManagerMulti.winner();
             System.out.println("Result: "+ result);
-            if(result == BBResultOppWin) winner.setText("You Lost!");
-            else if (result == BBResultSelfWin) winner.setText("You Won!");
+            if(result == BBResultOppWin)
+            {
+                winner.setText("You Lost!");
+                MediaPlayer failSound = MediaPlayer.create(this,R.raw.boosound);
+                failSound.start();
+
+            }
+            else if (result == BBResultSelfWin)
+            {
+                winner.setText("You Won!");
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
+                mp.start();
+            }
             else if(result == BBResultTie) winner.setText("Tied!");
             winner.setVisibility(View.VISIBLE);
         }
+        if(getIntent().getExtras().getInt("Mode") == BBSingleMode){
 
+            MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
+            mp.start();
+
+        }
         TextView scoreval = (TextView)findViewById(R.id.score);
         TextView roundval = (TextView)findViewById(R.id.round);
         scoreval.setText(Integer.toString(scoreVal));
@@ -68,6 +87,20 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
 
     }
 
+    boolean hasWindowFocus = true;
+
+    public void onWindowFocusChanged (boolean hasWindowFocus){
+        super.onWindowFocusChanged(hasWindowFocus);
+        if(hasWindowFocus){
+            ImageView img = (ImageView)findViewById(R.id.imageview1);
+            img.setBackgroundResource(R.drawable.frameanim);
+
+            AnimationDrawable anim = (AnimationDrawable)img.getBackground();
+            anim.start();
+
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
