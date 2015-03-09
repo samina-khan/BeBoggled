@@ -57,6 +57,8 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
             }
             else if (result == BBResultSelfWin)
             {
+                ImageView img = (ImageView)findViewById(R.id.imageview1);
+                img.setVisibility(View.VISIBLE);
                 winner.setText("You Won!");
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
                 mp.start();
@@ -65,6 +67,8 @@ public class Scorecard extends ActionBarActivity implements View.OnClickListener
             winner.setVisibility(View.VISIBLE);
         }
         if(getIntent().getExtras().getInt("Mode") == BBSingleMode){
+            ImageView img = (ImageView)findViewById(R.id.imageview1);
+            img.setVisibility(View.VISIBLE);
 
             MediaPlayer mp = MediaPlayer.create(this,R.raw.cheer);
             mp.start();
