@@ -181,22 +181,6 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                     mp.start();
                 }
 
-                //MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
-                //mp.start();
-
-                /*LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.toast_layout,
-                        (ViewGroup) findViewById(R.id.toast_layout_root));
-
-                TextView text = (TextView) layout.findViewById(R.id.text);
-                text.setText(str);
-
-                Toast toast = new Toast(getApplicationContext());
-                //toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(layout);
-                toast.show();*/
-                //Toast
                 Toast toast = Toast.makeText(getApplicationContext(), str,
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM ,0,15);
@@ -269,6 +253,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         if(!gameInProgress){
            if(role == ClientRole) commManagerMulti1.SendServer("message","BBReady");
             else{
+           findViewById(R.id.overlaywait).setVisibility(View.GONE);
            setAuxiliary();
            setGameBoard();
            startNewGame();}
@@ -387,10 +372,12 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onShake(int count) {
+                //findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 if(!gameInProgress) vibrator.vibrate(50);
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+
             }
         });
     }
@@ -434,6 +421,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                //findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
@@ -517,6 +505,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             //System.out.println("In Ontick");
             if(gameInProgress) {
                 if(!gameboardset){
+                    findViewById(R.id.overlaywait).setVisibility(View.GONE);
                     setGameBoard();
                     gameboard.setGameboard(gridstr);
                     gameboardset=true;

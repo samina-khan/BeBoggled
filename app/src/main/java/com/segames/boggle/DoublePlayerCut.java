@@ -107,6 +107,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
 
         initializeBoardButtons();
+        setAuxiliary();
 
 
         setTimer(this);
@@ -158,7 +159,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
             if (tempscore > 0) {
                 my_list = my_list.concat(selection+"\n");
                 //Log.v("Tag", selection);
-                my_wordlist.setText(my_list);
+                if(my_wordlist != null)my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {

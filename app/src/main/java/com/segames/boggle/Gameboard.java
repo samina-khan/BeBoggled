@@ -42,7 +42,7 @@ public class Gameboard implements GlobalConstants{
 
         for(Button[] a: buttons){
             for(Button b: a){
-                b.setLayoutParams(new TableRow.LayoutParams(210, 210));
+                b.setLayoutParams(new TableRow.LayoutParams(310, 310));
             }
         }
     }

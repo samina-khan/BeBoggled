@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Number of Rounds won by opponent :"
+                        android:text="Opponent rounds won :"
                         android:id="@+id/opproundsText"
                         android:textColor="#ffffffff"
                         android:layout_marginTop="15dp"

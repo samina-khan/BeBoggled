@@ -2,6 +2,7 @@
 package com.segames.boggle;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -140,6 +141,7 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
 
     public void onStart() {
         super.onStart();
+
         // If BT is not on, request that it be enabled.
         // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
@@ -240,6 +242,8 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     if (null != context) {
                         Toast.makeText(context, "Connected to "
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.button_server).setClickable(true);
+                        findViewById(R.id.button_client).setClickable(true);
                     }
                     break;
                 case Constants.MESSAGE_TOAST:
@@ -275,17 +279,18 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.bluetooth_chat, menu);
 
         /*
             Give the user a list of paired devices to choose from
          */
+        /*
         Intent serverIntent = new Intent(context, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-
+*/
         return true;
     }
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -299,5 +304,41 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
         }
 
         return super.onOptionsItemSelected(item);
+    }*/
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.secure_connect_scan: {
+            // Launch the DeviceListActivity to see devices and do scan
+            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+            return true;
+        }
+        case R.id.insecure_connect_scan: {
+            // Launch the DeviceListActivity to see devices and do scan
+            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+            return true;
+        }
+        case R.id.discoverable: {
+            // Ensure this device is discoverable by others
+            ensureDiscoverable();
+            return true;
+        }
     }
+    return false;
+}
+
+    /**
+     * Makes this device discoverable.
+     */
+    private void ensureDiscoverable() {
+        if (mBluetoothAdapter.getScanMode() !=
+                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            startActivity(discoverableIntent);
+        }
+    }
+
 }

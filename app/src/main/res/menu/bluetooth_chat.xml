@@ -13,10 +13,18 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="5dp"
-          android:textSize="18sp"
-    android:textColor="@android:color/white"
-    />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/secure_connect"
+        android:id="@+id/secure_connect_scan"/>
+
+    <item
+        android:title="@string/insecure_connect"
+        android:id="@+id/insecure_connect_scan"/>
+
+    <item
+        android:title="@string/discoverable"
+        android:id="@+id/discoverable"/>
+
+</menu>

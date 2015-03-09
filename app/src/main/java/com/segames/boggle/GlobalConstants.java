@@ -25,7 +25,7 @@ public interface GlobalConstants {
     public static final int BBWordsSuccess = 0;
     public static final int BBWordsFailure = -1;
 
-    public static final int BBGameTime = 10;
+    public static final int BBGameTime = 15;
 
     public static final String BBValidWordsFile = "bbwords.txt";
 
