@@ -160,6 +160,8 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore == -888 || tempscore > 0) {
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
+                mp.start();
                 my_list = my_list.concat(selection+"\n");
                 //Log.v("Tag", selection);
                 my_wordlist.setText(my_list);
