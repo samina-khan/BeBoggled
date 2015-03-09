@@ -36,8 +36,14 @@ public class CommManagerMulti implements GlobalConstants {
     private static List clientWords2 = new ArrayList();
 
     private static String multi_grid_str = "";
+    private static boolean client_ready_status = false;
+    private static boolean server_waiting_status = false;
 
     public static void setMultiGrid(String str) { multi_grid_str = new String(str); }
+    public static void setClientReadyStatus(boolean ready_status) { client_ready_status = ready_status; }
+    public static boolean isClientReady() { return client_ready_status; }
+    public static void setServerWaitingStatus(boolean waiting_status) { server_waiting_status = waiting_status; }
+    public static boolean isServerWaiting() { return server_waiting_status; }
 
     //tag argument unused: use as you see fit
     public static String SendServer(String tag, String arg){ // Role is not needed here
