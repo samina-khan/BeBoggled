@@ -5,6 +5,7 @@ package com.segames.boggle;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
@@ -33,13 +35,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Vibrator;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DoublePlayer extends ActionBarActivity implements View.OnClickListener,GlobalConstants{
 
     private final long startTime = BBGameTime * 1000;
     private final long interval = 1 * 1000;
     private static CountDownTimer countDownTimer;
-    private CommManagerMulti commManagerMulti1 = CommManagerMulti.getInstance();
 
 
     //Game state variables
@@ -59,10 +63,10 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     TextView opp_wordlist;
     String opp_list = "";
     private String gridstr;
+    private Vibrator vibrator;
 
     Gameboard gameboard;
     GestureDetector gestureDetector;
-    private Vibrator vibrator;
 
     //Shake-detection variables
     private SensorManager mSensorManager;
@@ -78,12 +82,26 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private View mContentView;
     private View mLoadingView;
     private int mShortAnimationDuration;
+
+    public static void timerStart(int interval) {
+        // int interval = 10000; // 10 sec
+        long time = System.currentTimeMillis() + interval;
+        Date timeToRun = new Date(time);
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            public void run() {
+                synchroStart();
+            }
+        }, timeToRun);
+    }
     static void synchroStart() {
         gameInProgress=true;
         countDownTimer.start();
     }
 
     /* OnCreate - All the start-up stuff here */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +112,9 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         mLoadingView = findViewById(R.id.red_layout);
         mLoadingView.setVisibility(View.GONE);
         mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        CommManagerMulti.setClientReadyStatus(false);
+        CommManagerMulti.setServerWaitingStatus(false);
 
         /* Getting arguments from previous screen */
         numRounds = getIntent().getExtras().getInt("Round");
@@ -126,9 +147,10 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         /*
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright)};
-*/
+        */
         arrows= new Drawable[]{getResources().getDrawable(R.drawable.yellowtopleft2), getResources().getDrawable(R.drawable.yellowup_alt), getResources().getDrawable(R.drawable.yellowtopright2),
                 getResources().getDrawable(R.drawable.yellowleft_alt), getResources().getDrawable(R.drawable.yellowdie),getResources().getDrawable(R.drawable.yellowright_alt), getResources().getDrawable(R.drawable.yellowbottomleft2), getResources().getDrawable(R.drawable.yellowdown_alt), getResources().getDrawable(R.drawable.yellowbottomright2)};
+
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
@@ -153,6 +175,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     void wordfinalize(){
 
 
@@ -164,16 +187,26 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 mp.start();
                 my_list = my_list.concat(selection+"\n");
                 //Log.v("Tag", selection);
-                my_wordlist.setText(my_list);
+                if(my_wordlist != null)my_wordlist.setText(my_list);
                 score += tempscore;
                 setScore(score);
             } else {
-                String str = (tempscore == -999 ) ? "Selected!" : "Bad Word!";
-                vibrator.vibrate(50);
+                //System.out.println("tempscore "+tempscore);
+                String str="";
                 //Animation red
                 mContentLoaded = !mContentLoaded;
                 showContentOrLoadingIndicator(mContentLoaded);
-                //Sound effect
+                switch (tempscore){
+                    case -999 :
+                        str = "Selected!";
+                        break;
+                    case -888 :
+                        str = "Opponent Selected!";
+                        break;
+                    case 0:
+                        str = "Bad Word!";
+                        break;
+                }
                 if(str.equals("Bad Word!")){
                     MediaPlayer mp = MediaPlayer.create(this,R.raw.badsound);
                     mp.start();
@@ -182,7 +215,27 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                     MediaPlayer mp = MediaPlayer.create(this,R.raw.selected);
                     mp.start();
                 }
+                if(str.equals("Opponent Selected!")){
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                    mp.start();
+                }
+                vibrator.vibrate(50);
+                /*String str = (tempscore == -999 || tempscore == -888) ? "Selected!" : "Bad Word!";*/
+                /*MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                mp.start();*/
+               /* LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.toast_layout,
+                        (ViewGroup) findViewById(R.id.toast_layout_root));
 
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText(str);
+
+                Toast toast = new Toast(getApplicationContext());
+                //toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();*/
+                //Toast
                 Toast toast = Toast.makeText(getApplicationContext(), str,
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM ,0,15);
@@ -193,6 +246,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         }
 
     }
+
 
     private void showContentOrLoadingIndicator(boolean contentLoaded) {
         // Decide which view to hide and which to show.
@@ -243,7 +297,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         if(selection.length()>=3)
         {
-            String serverreply = commManagerMulti1.SendServer("word",selection);
+            String serverreply = CommManagerMulti.SendServer("word",selection);
             score = Integer.parseInt(serverreply);
         }
 
@@ -253,12 +307,24 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     void shakeGrid(int length){
 
         if(!gameInProgress){
-           if(role == ClientRole) commManagerMulti1.SendServer("message","BBReady");
-            else{
-           findViewById(R.id.overlaywait).setVisibility(View.GONE);
-           setAuxiliary();
-           setGameBoard();
-           startNewGame();}
+            if(role == ClientRole) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Server",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                CommManagerMulti.SendServer("message", "BBReady");
+            } else {
+                if(CommManagerMulti.isClientReady()) {
+                   findViewById(R.id.overlaywait).setVisibility(View.GONE);
+                   setAuxiliary();
+                   setGameBoard();
+                   startNewGame();
+               } else {
+                   Toast toast = Toast.makeText(getApplicationContext(), "Opponent is not Ready",
+                           Toast.LENGTH_SHORT);
+                   toast.show();
+                   CommManagerMulti.setServerWaitingStatus(true);
+               }
+           }
         }
     }
 
@@ -333,14 +399,16 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         rotation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
+
             @Override
             public void onAnimationEnd(Animation animation) {
-                if(role== ServerRole) {
+                if (role == ServerRole) {
                     gameboard.setGameboard(gridstr);
-                    gameboardset=true;
+                    gameboardset = true;
                     countDownTimer.start();
                 }
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
@@ -351,6 +419,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         }
     }
+
     void setGameBoard()
     {
         button_submit.setVisibility(View.GONE);
@@ -374,12 +443,10 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onShake(int count) {
-                //findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 if(!gameInProgress) vibrator.vibrate(50);
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
-
             }
         });
     }
@@ -414,6 +481,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         Button current_button= (Button) v;
@@ -423,7 +491,6 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
-                //findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
@@ -470,15 +537,14 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         String[] oppwords = CommManagerMulti.getOppWordsList().split("\\|");
         String str = "";
         for(String word: oppwords){
-            str = str + word + "\n";
+            String[] words = word.split(":");
+            str = str + words[0] + "\n";
         }
         if(opp_wordlist!=null)opp_wordlist.setText(str);
 
     }
-
     public class CountDownTimerActivity extends CountDownTimer {
         Context context;
-
         public CountDownTimerActivity(long startTime, long interval, Context context) {
             super(startTime, interval);
             this.context=context;
@@ -504,9 +570,9 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         @Override
         public void onTick(long millisUntilFinished) {
-            //System.out.println("In Ontick");
-            if(gameInProgress) {
-                if(!gameboardset){
+
+                if(gameInProgress) {
+                    if(!gameboardset){
                     findViewById(R.id.overlaywait).setVisibility(View.GONE);
                     setGameBoard();
                     gameboard.setGameboard(gridstr);
@@ -519,7 +585,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                     timer.setTextColor(Color.RED);
                 }
                 timer.setText("" + String.format("%02d", ((millisUntilFinished / 1000) / 60)) + ":" + String.format("%02d", ((millisUntilFinished / 1000) % 60)));
-            //}
+
         }
     }
 }
