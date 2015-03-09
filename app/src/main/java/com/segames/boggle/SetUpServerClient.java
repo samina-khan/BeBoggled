@@ -204,12 +204,14 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                         try{
 
                             CommManagerMulti.setMultiGrid(readMessage);
-                            DoublePlayer.synchroStart();
+                            DoublePlayer.timerStart(1650);
+                            //DoublePlayer.synchroStart();
                         }
                         catch(NullPointerException e1){
                             try{
                                 CommManagerMulti.setMultiGrid(readMessage);
-                                DoublePlayerCut.synchroStart();
+                                DoublePlayerCut.timerStart(1650);
+                                //DoublePlayer.synchroStart();
                             }
                             catch(NullPointerException e2){
                                 System.out.println("SynchroStart error");
@@ -220,12 +222,14 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                                 Toast.makeText(context, "Start", Toast.LENGTH_SHORT).show();
                                 try {
                                     CommManagerMulti.setMultiGrid(readMessage);
-                                    DoublePlayerCut.synchroStart();
+                                    DoublePlayerCut.timerStart(5000);
+                                    //DoublePlayer.synchroStart();
                                 } catch (NullPointerException e1) {
                                     try {
                                         //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
                                         CommManagerMulti.setMultiGrid(readMessage);
-                                        DoublePlayerCut.synchroStart();
+                                        DoublePlayer.timerStart(5000);
+                                        //DoublePlayer.synchroStart();
                                     } catch (NullPointerException e2) {
                                         System.out.println("SynchroStart error");
                                     }

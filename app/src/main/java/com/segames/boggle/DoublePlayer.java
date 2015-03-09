@@ -82,14 +82,15 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private View mContentView;
     private View mLoadingView;
     private int mShortAnimationDuration;
+    static Timer synctimer = new Timer();
 
     public static void timerStart(int interval) {
         // int interval = 10000; // 10 sec
         long time = System.currentTimeMillis() + interval;
         Date timeToRun = new Date(time);
-        Timer timer = new Timer();
 
-        timer.schedule(new TimerTask() {
+
+        synctimer.schedule(new TimerTask() {
             public void run() {
                 synchroStart();
             }
@@ -183,7 +184,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore == -888 || tempscore > 0) {
-                MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 my_list = my_list.concat(selection+"\n");
                 //Log.v("Tag", selection);

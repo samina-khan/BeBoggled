@@ -81,14 +81,14 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     private View mContentView;
     private View mLoadingView;
     private int mShortAnimationDuration;
+    static Timer synctimer = new Timer();
 
     public static void timerStart(int interval) {
         // int interval = 10000; // 10 sec
         long time = System.currentTimeMillis() + interval;
         Date timeToRun = new Date(time);
-        Timer timer = new Timer();
 
-        timer.schedule(new TimerTask() {
+        synctimer.schedule(new TimerTask() {
             public void run() {
                 synchroStart();
             }
@@ -533,7 +533,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         TextView score_opp = (TextView) findViewById(R.id.score_opp);
         if(score_opp!= null) score_opp.setText(Integer.toString(oppscore));
 
-        String[] oppwords = CommManagerMulti.getOppWords().split("\\|");
+        String[] oppwords = CommManagerMulti.getOppWordsList().split("\\|");
         String str = "";
         for(String word: oppwords){
             String[] words = word.split(":");
