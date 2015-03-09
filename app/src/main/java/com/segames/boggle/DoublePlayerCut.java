@@ -182,7 +182,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore == -888 || tempscore > 0) {
-                MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 my_list = my_list.concat(selection+"\n");
                 //Log.v("Tag", selection);
@@ -215,7 +215,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                     mp.start();
                 }
                 if(str.equals("Opponent Selected!")){
-                    MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
                     mp.start();
                 }
                 vibrator.vibrate(50);

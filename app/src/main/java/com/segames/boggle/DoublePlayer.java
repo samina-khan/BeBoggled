@@ -216,7 +216,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                     mp.start();
                 }
                 if(str.equals("Opponent Selected!")){
-                    MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
+                    MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
                     mp.start();
                 }
                 vibrator.vibrate(50);

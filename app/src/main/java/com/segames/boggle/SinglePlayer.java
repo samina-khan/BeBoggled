@@ -175,7 +175,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
             if (tempscore > 0) {
-                MediaPlayer mp = MediaPlayer.create(this,R.raw.fuzzybeep);
+                MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 my_list = my_list.concat("\n" + selection);
                 //Log.v("Tag", selection);
