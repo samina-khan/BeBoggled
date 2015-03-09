@@ -199,41 +199,43 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Log.v(TAG,"Me: " + readMessage);
-                    if (null != context) {
-                        //Toast.makeText(context, "Other player says " + readMessage, Toast.LENGTH_SHORT).show();
-                    }
-                    // Check for the incoming gridStr from Server
-                    //if(currentRole == ClientRole) {
-                        if(readMessage.length() >= BBMinGridLen){
-                            Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
-                            try{
+                    if(readMessage.length() >= BBMinGridLen){
+                        Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
+                        try{
 
+                            CommManagerMulti.setMultiGrid(readMessage);
+                            DoublePlayer.synchroStart();
+                        }
+                        catch(NullPointerException e1){
+                            try{
                                 CommManagerMulti.setMultiGrid(readMessage);
-                                DoublePlayer.synchroStart();
+                                DoublePlayerCut.synchroStart();
                             }
-                            catch(NullPointerException e1){
-                                try{
-                                    //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
+                            catch(NullPointerException e2){
+                                System.out.println("SynchroStart error");
+                            }
+                        }
+                    } else if(readMessage.equals("BBReady")) {
+                            if (CommManagerMulti.isServerWaiting()) {
+                                Toast.makeText(context, "Start", Toast.LENGTH_SHORT).show();
+                                try {
                                     CommManagerMulti.setMultiGrid(readMessage);
                                     DoublePlayerCut.synchroStart();
+                                } catch (NullPointerException e1) {
+                                    try {
+                                        //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
+                                        CommManagerMulti.setMultiGrid(readMessage);
+                                        DoublePlayerCut.synchroStart();
+                                    } catch (NullPointerException e2) {
+                                        System.out.println("SynchroStart error");
+                                    }
                                 }
-                                catch(NullPointerException e2){
-                                    System.out.println("SynchroStart error");
-                                }
+                            } else { // Set the client ready status
+                                CommManagerMulti.setClientReadyStatus(true);
                             }
-                            //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        else {
-                            if(readMessage.equals("BBReady")){
-                            Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();}
-                            else{
-                            CommManagerMulti.writeOppWord(readMessage);}
-                        }
-                    //} else { // This is opponent's guessed word
-                     //   CommManagerMulti.writeOppWord(readMessage);
-                    //}
+                    } else {
+                        CommManagerMulti.writeOppWord(readMessage);
+                    }
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
