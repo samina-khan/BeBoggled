@@ -45,6 +45,8 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
     private final long interval = 1 * 1000;
     private static CountDownTimer countDownTimer;
 
+    public static boolean created = false;
+
 
     //Game state variables
     static boolean gameInProgress = false;
@@ -121,6 +123,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
         role = getIntent().getExtras().getInt("Role");
+        created = true;
         //System.out.println("Role: "+role);
 
         //Log.v("Round",Integer.toString(numRounds));
@@ -564,6 +567,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 scoreIntent.putExtra("Role", role);
                 gameInProgress = false;
                 gameboardset = false;
+                created = false;
                 startActivity(scoreIntent);
             }
         }
