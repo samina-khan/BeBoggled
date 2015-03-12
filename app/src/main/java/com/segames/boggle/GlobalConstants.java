@@ -55,7 +55,7 @@ public interface GlobalConstants {
      * BBClient display constants
      */
 
-    public static final int BBMaxEasyRounds = 1;
+    public static final int BBMaxEasyRounds = 3;
     public static final int BBMaxTotalRounds = 5;
     public static final int BBMinWordLength = 3;
 
