@@ -312,7 +312,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
         if(!gameInProgress){
             if(role == ClientRole) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Server",
+                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Opponent",
                         Toast.LENGTH_SHORT);
                 toast.show();
                 CommManagerMulti.SendServer("message", "BBReady");
@@ -406,6 +406,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                findViewById(R.id.overlaywait).setVisibility(View.GONE);
                 if (role == ServerRole) {
                     gameboard.setGameboard(gridstr);
                     gameboardset = true;
@@ -451,6 +452,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -495,6 +497,7 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
@@ -578,7 +581,6 @@ public class DoublePlayer extends ActionBarActivity implements View.OnClickListe
 
                 if(gameInProgress) {
                     if(!gameboardset){
-                    findViewById(R.id.overlaywait).setVisibility(View.GONE);
                     setGameBoard();
                     gameboard.setGameboard(gridstr);
                     gameboardset=true;

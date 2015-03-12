@@ -311,7 +311,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
         if(!gameInProgress){
             if(role == ClientRole) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Server",
+                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Opponent",
                         Toast.LENGTH_SHORT);
                 toast.show();
                 CommManagerMulti.SendServer("message", "BBReady");
@@ -406,6 +406,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                findViewById(R.id.overlaywait).setVisibility(View.GONE);
                 if (role == ServerRole) {
                     gameboard.setGameboard(gridstr);
                     gameboardset = true;
@@ -451,6 +452,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -495,6 +497,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
