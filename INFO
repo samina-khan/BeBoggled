@@ -1,0 +1,17 @@
+This is an app for the game of Boggle, a fun word game.
+The game itself has three modes:
+- Easy
+- Hard
+- Online
+
+Easy: The easy mode allows the player to progress through three warm up rounds of 3x3 grids before presenting them with 4x4 grids.
+      They may play unlimited round till they chooce the end game, at which point they're shown the number of rounds they played and their total score.
+Hard: This is similar to the 'easy' mode except that there are no warm up rounds and user is immediately presented with 4x4 grids from the time they start.
+Online: Users can connect via bluetooth to play each other on a 4x4 grid. A winner is declared at the end of the game based on the relative number of rounds won.
+
+The app wasmade by a team of four people for an academic project:
+Edward Anderson
+Evgeniy Li
+Samina Khan
+Srividya Sundaram
+
